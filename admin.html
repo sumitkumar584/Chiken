@@ -3,76 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aviator Admin Dashboard</title>
+    <title>Aviator - Spribe Style</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Montserrat', sans-serif; background-color: #07090e; color: #fff; }</style>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Montserrat', sans-serif; background-color: #0b0e14; color: #ffffff; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .glow-red { text-shadow: 0 0 20px rgba(239, 68, 68, 0.8); }
+    </style>
 </head>
-<body class="min-h-screen p-4 flex flex-col items-center">
+<body class="min-h-screen flex flex-col justify-between select-none">
 
-    <div class="max-w-md w-full space-y-4">
-        <!-- Admin Header -->
-        <div class="bg-[#121622] border border-gray-800 p-4 rounded-2xl flex justify-between items-center shadow-xl">
-            <h1 class="text-lg font-black text-red-500 flex items-center"><i class="fa-solid fa-shield-halved mr-2"></i>Admin Portal</h1>
-            <span class="text-xs bg-green-900 text-green-300 px-2.5 py-1 rounded-full font-bold">Live</span>
+    <!-- TOP HEADER -->
+    <header class="bg-[#121622] border-b border-gray-800 px-3 py-2 flex items-center justify-between sticky top-0 z-50">
+        <div class="flex items-center space-x-2">
+            <button class="text-gray-400 hover:text-white"><i class="fa-solid fa-house text-sm"></i></button>
+            <span class="text-lg font-black tracking-wider text-red-500 italic">Aviator</span>
         </div>
+        <div class="flex items-center space-x-3">
+            <span id="headerBalance" class="text-sm font-extrabold text-white">0.32 INR</span>
+            <button class="text-gray-400 hover:text-white"><i class="fa-regular fa-comment-dots text-base"></i></button>
+            <button class="text-gray-400 hover:text-white"><i class="fa-solid fa-bars text-base"></i></button>
+        </div>
+    </header>
 
-        <!-- Key Metrics Grid -->
-        <div class="grid grid-cols-2 gap-3">
-            <div class="bg-[#121622] border border-gray-800 p-3.5 rounded-2xl shadow-lg">
-                <div class="text-xs text-gray-400 font-semibold">Total Registered Users</div>
-                <div id="adminUsersCount" class="text-2xl font-black text-white mt-1">142</div>
-            </div>
-            <div class="bg-[#121622] border border-gray-800 p-3.5 rounded-2xl shadow-lg">
-                <div class="text-xs text-gray-400 font-semibold">Platform Revenue</div>
-                <div id="adminRevenue" class="text-2xl font-black text-green-400 mt-1">₹48,200</div>
-            </div>
-        </div>
-
-        <!-- Game Crash Multiplier Control -->
-        <div class="bg-[#121622] border border-gray-800 p-4 rounded-2xl space-y-3 shadow-xl">
-            <h2 class="text-sm font-bold text-gray-300 flex items-center"><i class="fa-solid fa-sliders mr-2 text-indigo-400"></i>Game Crash Control</h2>
-            <div>
-                <label class="text-xs text-gray-400 mb-1 block">Set Next Crash Multiplier</label>
-                <div class="flex space-x-2">
-                    <input type="number" id="crashInput" step="0.1" value="2.00" class="flex-grow bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold text-sm">
-                    <button onclick="updateCrash()" class="bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-xl text-xs font-bold shadow">Apply</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pending Withdrawals Management -->
-        <div class="bg-[#121622] border border-gray-800 p-4 rounded-2xl space-y-3 shadow-xl">
-            <h2 class="text-sm font-bold text-gray-300 flex items-center"><i class="fa-solid fa-money-check-dollar mr-2 text-yellow-400"></i>Pending Withdrawals</h2>
-            <div class="space-y-2" id="withdrawalList">
-                <div class="bg-[#1b2230] p-3 rounded-xl border border-gray-700 flex justify-between items-center text-xs">
-                    <div>
-                        <div class="font-bold text-white">₹1,500 - user@gmail.com</div>
-                        <div class="text-gray-400 text-[10px]">UPI: user@okaxis</div>
-                    </div>
-                    <div class="space-x-1">
-                        <button onclick="approveWithdraw(this)" class="bg-green-600 px-2.5 py-1 rounded-lg font-bold text-white">Approve</button>
-                        <button onclick="rejectWithdraw(this)" class="bg-red-600 px-2.5 py-1 rounded-lg font-bold text-white">Reject</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- RECENT MULTIPLIERS BAR -->
+    <div class="bg-[#0b0e14] px-2 py-1.5 flex items-center space-x-2 overflow-x-auto no-scrollbar border-b border-gray-900">
+        <span class="bg-[#181f2c] px-2.5 py-0.5 rounded-full text-[11px] font-bold text-blue-400 border border-gray-800">2.51x</span>
+        <span class="bg-[#181f2c] px-2.5 py-0.5 rounded-full text-[11px] font-bold text-green-400 border border-gray-800">1.10x</span>
+        <span class="bg-[#181f2c] px-2.5 py-0.5 rounded-full text-[11px] font-bold text-green-400 border border-gray-800">1.25x</span>
+        <span class="bg-[#181f2c] px-2.5 py-0.5 rounded-full text-[11px] font-bold text-green-400 border border-gray-800">1.12x</span>
+        <span class="bg-[#181f2c] px-2.5 py-0.5 rounded-full text-[11px] font-bold text-purple-400 border border-gray-800">22.74x</span>
+        <span class="bg-[#181f2c] px-2.5 py-0.5 rounded-full text-[11px] font-bold text-blue-400 border border-gray-800">5.14x</span>
     </div>
 
-    <script>
-        function updateCrash() {
-            const val = document.getElementById('crashInput').value;
-            alert("Next crash multiplier updated to " + val + "x successfully!");
-        }
-        function approveWithdraw(btn) {
-            btn.parentElement.parentElement.remove();
-            alert("Withdrawal Approved & Processed!");
-        }
-        function rejectWithdraw(btn) {
-            btn.parentElement.parentElement.remove();
-            alert("Withdrawal Rejected!");
-        }
-    </script>
-</body>
-</html>
+    <!-- MAIN GAME CONTAINER -->
+    <main class="flex-grow max-w-md w-full mx-auto p-2 space-y-2 overflow-y-auto">
+
+        <!-- GAME CANVAS ARENA -->
+        <div class="relative bg-gradient-to-tr from-[#16121d] via-[#101420] to-[#0b0e14] border border-gray-800 rounded-2xl overflow-hidden shadow-2xl h-56 flex flex-col items-center justify-center">
+            <canvas id="gameCanvas" class="absolute inset-0 w-full h-full z-10"></canvas>
+            <div id="gameStatusDisplay" class="z-20 text-center">
+                <div id="multiplierValue" class="text-5xl font-black tracking-wider text-white glow-red">1.00x</div>
+                <div id="gameStatusText" class="text-[10px] tracking-widest uppercase text-gray-400 mt-1">Waiting for next round...</div>
+            </div>
+            <!-- Live Online Ticker Badge -->
+            <div class="absolute bottom-2 right-2 z-20 bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-full border border-gray-800 flex items-center space-x-1.5 text-[10px] text-gray-300">
+                <div class="flex -space-x-1">
+                    <span class="w-3.5 h-3.5 rounded-full bg-red-500 inline-block border border-black"></span>
+                    <span class="w-3.5 h-3.5 rounded-full bg-yellow-500 inline-block border border-black"></span>
+                    <span class="w-3.5 h-3.5 rounded-full bg-green-500 inline-block border border-black"></span>
+                </div>
+                <span class="font-bold">3,187</span>
+            </div>
+        </div>
+
+        <!-- DUAL BETTING PANEL 1 -->
+        <div class="bg-[#121622] border border-gray-800 rounded-2xl p-3 space-y-2.5 shadow-xl">
+            <!-- Bet / Auto Tabs -->
+            <div class="flex bg-[#0b0e14] p-0.5 rounded-xl border border-gray-800 text-xs font-bold">
+                <button class="flex-1 py-1 rounded-lg bg-[#1f2636] text-white shadow">Bet</button>
+                <button class="flex-1 py-1 rounded-lg text-gray-400">Auto</button>
+            </div>
+            <!-- Input & Chips Row -->
+            <div class="grid grid-cols-2 gap-2 items-center">
+                <div class="flex items-center bg-[#0b0e14] border border-gray-800 rounded-xl px-2 py-1.5">
+                    <button onclick="adjustBet(1, -10)" class="text-gray-400 hover:text-white px-1 text-sm font-bold"><i class="fa-solid fa-minus"></i></button>
+                    <input type="number" id="betInput1" value="10.00" class="w-full bg-transparent text-center text-white font-extrabold text-sm focus:outline-none">
+                    <button onclick="adjustBet(1, 10)" class="text-gray-400 hover:text-white px-1 text-sm font-bold"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="grid grid-cols-2 gap-1">
+                    <button onclick="setBetVal(1, 100)" class="bg-[#1b2230] hover:bg-[#252f42] py-1.5 rounded-lg text-[11px] font-bold text-gray-300 border border-gray-800">100
