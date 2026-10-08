@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aviator - Ultimate Crash Game Platform</title>
+    <title>Aviator - Ultimate Crash Game & Casino</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -14,14 +14,11 @@
         body { font-family: 'Montserrat', sans-serif; background-color: #0b0e14; color: #ffffff; }
         .glow-green { text-shadow: 0 0 10px rgba(74, 222, 128, 0.6); }
         .glow-red { text-shadow: 0 0 10px rgba(248, 113, 113, 0.6); }
-        .neon-border { box-shadow: 0 0 15px rgba(34, 197, 94, 0.3); }
-        /* Hide scrollbar for Chrome, Safari and Opera */
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        /* Hide scrollbar for IE, Edge and Firefox */
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between pb-16">
+<body class="min-h-screen flex flex-col justify-between pb-20">
 
     <!-- TOP HEADER -->
     <header class="bg-[#121622] border-b border-gray-800 px-4 py-3 flex items-center justify-between sticky top-0 z-50">
@@ -34,7 +31,7 @@
             <!-- Wallet Balance Badge -->
             <div class="bg-[#1f2636] px-3 py-1.5 rounded-lg border border-gray-700 flex items-center space-x-2">
                 <span class="text-xs text-gray-400">Bal:</span>
-                <span id="headerBalance" class="font-bold text-green-400">₹0.00</span>
+                <span id="headerBalance" class="font-bold text-green-400">₹1000.00</span>
             </div>
             <!-- Profile Trigger -->
             <button onclick="switchTab('profile')" class="w-9 h-9 rounded-full bg-gradient-to-tr from-red-600 to-orange-500 flex items-center justify-center font-bold text-sm shadow-md">
@@ -119,10 +116,10 @@
                     </div>
                     <!-- Quick Amount Buttons -->
                     <div class="grid grid-cols-4 gap-2">
-                        <button onclick="document.getElementById('depositAmount').value='100'" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-semibold hover:border-green-500">₹100</button>
-                        <button onclick="document.getElementById('depositAmount').value='500'" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-semibold hover:border-green-500">₹500</button>
-                        <button onclick="document.getElementById('depositAmount').value='1000'" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-semibold hover:border-green-500">₹1000</button>
-                        <button onclick="document.getElementById('depositAmount').value='5000'" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-semibold hover:border-green-500">₹5000</button>
+                        <button onclick="setQuickDeposit(100)" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-semibold hover:border-green-500">₹100</button>
+                        <button onclick="setQuickDeposit(500)" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-semibold hover:border-green-500">₹500</button>
+                        <button onclick="setQuickDeposit(1000)" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-semibold hover:border-green-500">₹1000</button>
+                        <button onclick="setQuickDeposit(5000)" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-semibold hover:border-green-500">₹5000</button>
                     </div>
                     <!-- Direct Payment Apps -->
                     <div class="grid grid-cols-2 gap-2 pt-2">
@@ -170,7 +167,7 @@
 
         <!-- 4. PROFILE / ACCOUNT & AUTH VIEW -->
         <div id="viewProfile" class="hidden space-y-4">
-            <!-- Auth Box (If Not Logged In) -->
+            <!-- Auth Box -->
             <div id="authContainer" class="bg-[#121622] border border-gray-800 rounded-2xl p-4 shadow-xl space-y-3">
                 <h2 class="text-lg font-bold text-white text-center mb-2" id="authTitle">User Login / Register</h2>
                 <div>
@@ -185,12 +182,9 @@
                     <button onclick="handleEmailLogin()" class="flex-1 py-2.5 bg-red-600 hover:bg-red-500 font-bold rounded-xl text-sm">Login</button>
                     <button onclick="handleEmailRegister()" class="flex-1 py-2.5 bg-gray-700 hover:bg-gray-600 font-bold rounded-xl text-sm">Register</button>
                 </div>
-                <button onclick="handleGoogleLogin()" class="w-full py-2.5 bg-white text-gray-900 font-bold rounded-xl text-sm flex items-center justify-center space-x-2">
-                    <i class="fa-brands fa-google text-red-500"></i> <span>Google Sign In</span>
-                </button>
             </div>
 
-            <!-- User Dashboard Info (If Logged In) -->
+            <!-- User Dashboard Info -->
             <div id="userDashboard" class="hidden bg-[#121622] border border-gray-800 rounded-2xl p-4 shadow-xl space-y-4">
                 <div class="flex items-center space-x-3 border-b border-gray-800 pb-3">
                     <div class="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-xl font-bold">
@@ -198,7 +192,7 @@
                     </div>
                     <div>
                         <div id="profileEmailDisplay" class="font-bold text-sm text-white">user@gmail.com</div>
-                        <div class="text-xs text-green-400 font-semibold">Verified Account</div>
+                        <div class="text-xs text-green-400 font-semibold">Active Wallet Connected</div>
                     </div>
                 </div>
                 <button onclick="handleLogout()" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-red-400 font-bold rounded-xl text-sm">
@@ -223,7 +217,7 @@
             </div>
         </div>
 
-        <!-- 5. ADMIN PANEL VIEW (Hidden by default) -->
+        <!-- 5. ADMIN PANEL VIEW -->
         <div id="viewAdmin" class="hidden space-y-4">
             <div class="bg-[#121622] border border-gray-800 rounded-2xl p-4 shadow-xl space-y-4">
                 <div class="flex justify-between items-center border-b border-gray-800 pb-3">
@@ -238,7 +232,7 @@
                     </div>
                     <div class="bg-[#1b2230] p-3 rounded-xl border border-gray-700">
                         <div class="text-xs text-gray-400">Platform Balance</div>
-                        <div id="adminStatBalance" class="text-xl font-black text-green-400 mt-1">₹0</div>
+                        <div id="adminStatBalance" class="text-xl font-black text-green-400 mt-1">₹1000</div>
                     </div>
                 </div>
                 <!-- Game Multiplier Controller -->
@@ -279,116 +273,23 @@
         Notification text here
     </div>
 
-    <!-- FIREBASE SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, addTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        // Firebase Configuration (Replace with your Firebase Project config)
-        const firebaseConfig = {
-            apiKey: "AIzaSyDummyKeyForGitHubExport-12345",
-            authDomain: "aviator-game-app.firebaseapp.com",
-            projectId: "aviator-game-app",
-            storageBucket: "aviator-game-app.appspot.com",
-            messagingSenderId: "1234567890",
-            appId: "1:1234567890:web:abcdef"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        let currentUser = null;
-        let userBalance = 1000.00; // Default demo balance if offline
-
-        // Expose Firebase objects globally for game logic
-        window.firebaseAuth = auth;
-        window.firebaseDb = db;
-
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                currentUser = user;
-                document.getElementById('authContainer').classList.add('hidden');
-                document.getElementById('userDashboard').classList.remove('hidden');
-                document.getElementById('profileEmailDisplay').innerText = user.email;
-                
-                // Fetch user doc from Firestore
-                const userRef = doc(db, "users", user.uid);
-                const userSnap = await getDoc(userRef);
-                if (userSnap.exists()) {
-                    userBalance = userSnap.data().balance || 1000;
-                } else {
-                    await setDoc(userRef, { email: user.email, balance: 1000 });
-                    userBalance = 1000;
-                }
-                updateBalanceDisplay();
-            } else {
-                currentUser = null;
-                document.getElementById('authContainer').classList.remove('hidden');
-                document.getElementById('userDashboard').classList.add('hidden');
-            }
-        });
-
-        window.handleEmailLogin = async () => {
-            const email = document.getElementById('authEmail').value;
-            const pass = document.getElementById('authPassword').value;
-            try {
-                await signInWithEmailAndPassword(auth, email, pass);
-                showToast("Login Successful!");
-                switchTab('home');
-            } catch (err) { showToast("Error: " + err.message); }
-        };
-
-        window.handleEmailRegister = async () => {
-            const email = document.getElementById('authEmail').value;
-            const pass = document.getElementById('authPassword').value;
-            try {
-                const res = await createUserWithEmailAndPassword(auth, email, pass);
-                await setDoc(doc(db, "users", res.user.uid), { email: email, balance: 1000 });
-                showToast("Account Created & Logged In!");
-                switchTab('home');
-            } catch (err) { showToast("Error: " + err.message); }
-        };
-
-        window.handleGoogleLogin = async () => {
-            const provider = new GoogleAuthProvider();
-            try {
-                const res = await signInWithPopup(auth, provider);
-                const userRef = doc(db, "users", res.user.uid);
-                const userSnap = await getDoc(userRef);
-                if (!userSnap.exists()) {
-                    await setDoc(userRef, { email: res.user.email, balance: 1000 });
-                }
-                showToast("Google Login Success!");
-                switchTab('home');
-            } catch (err) { showToast("Error: " + err.message); }
-        };
-
-        window.handleLogout = async () => {
-            await signOut(auth);
-            showToast("Logged out successfully");
-        };
-    </script>
-
-    <!-- FRONTEND GAME & APP LOGIC -->
+    <!-- JAVASCRIPT APP LOGIC -->
     <script>
-        let currentTab = 'home';
         let balance = 1000.00;
         let gameActive = false;
         let currentMultiplier = 1.00;
         let crashMultiplier = 2.00;
         let betPlaced1 = false;
         let betPlaced2 = false;
-        let betAmount1 = 100;
-        let betAmount2 = 100;
+        let gameTimer = 5;
 
         function updateBalanceDisplay() {
             document.getElementById('headerBalance').innerText = '₹' + balance.toFixed(2);
+            const adminBal = document.getElementById('adminStatBalance');
+            if(adminBal) adminBal.innerText = '₹' + balance.toFixed(2);
         }
 
         function switchTab(tab) {
-            currentTab = tab;
             ['home', 'deposit', 'withdraw', 'profile', 'admin'].forEach(t => {
                 const el = document.getElementById('view' + t.charAt(0).toUpperCase() + t.slice(1));
                 if (el) el.classList.add('hidden');
@@ -411,7 +312,6 @@
 
         function setBetAmount(box, amt) {
             document.getElementById('betInput' + box).value = amt;
-            if(box === 1) betAmount1 = amt; else betAmount2 = amt;
         }
 
         function toggleBet(box) {
@@ -451,13 +351,21 @@
             }
         }
 
-        // UPI Deposit handler
-        document.getElementById('depositAmount').addEventListener('input', (e) => {
-            const val = e.target.value || 0;
+        function setQuickDeposit(amt) {
+            document.getElementById('depositAmount').value = amt;
+            updateDepositLinks(amt);
+        }
+
+        function updateDepositLinks(val) {
             document.getElementById('upiQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=merchant@upi&am=${val}`;
             document.getElementById('phonepeLink').href = `phonepe://pay?pa=merchant@upi&am=${val}&cu=INR`;
             document.getElementById('gpayLink').href = `tez://upi/pay?pa=merchant@upi&am=${val}&cu=INR`;
+        }
+
+        document.getElementById('depositAmount').addEventListener('input', (e) => {
+            updateDepositLinks(e.target.value || 0);
         });
+        updateDepositLinks(500);
 
         function submitDeposit() {
             const amt = parseFloat(document.getElementById('depositAmount').value);
@@ -492,15 +400,40 @@
             switchTab('home');
         }
 
+        function handleEmailLogin() {
+            const email = document.getElementById('authEmail').value;
+            if(!email) { showToast("Enter email!"); return; }
+            document.getElementById('authContainer').classList.add('hidden');
+            document.getElementById('userDashboard').classList.remove('hidden');
+            document.getElementById('profileEmailDisplay').innerText = email;
+            showToast("Login Successful!");
+            switchTab('home');
+        }
+
+        function handleEmailRegister() {
+            const email = document.getElementById('authEmail').value;
+            if(!email) { showToast("Enter email!"); return; }
+            document.getElementById('authContainer').classList.add('hidden');
+            document.getElementById('userDashboard').classList.remove('hidden');
+            document.getElementById('profileEmailDisplay').innerText = email;
+            showToast("Account Created & Logged In!");
+            switchTab('home');
+        }
+
+        function handleLogout() {
+            document.getElementById('authContainer').classList.remove('hidden');
+            document.getElementById('userDashboard').classList.add('hidden');
+            showToast("Logged out successfully");
+        }
+
         function openAdminPanel() {
             const pass = document.getElementById('adminPassword').value;
             const email = document.getElementById('adminEmail').value;
             if(pass === "admin123" || email === "admin@aviator.com") {
                 switchTab('admin');
-                document.getElementById('adminStatBalance').innerText = '₹' + balance.toFixed(2);
                 showToast("Admin Login Successful!");
             } else {
-                showToast("Invalid Admin Credentials!");
+                showToast("Invalid Admin Credentials! Use password: admin123");
             }
         }
 
@@ -520,7 +453,6 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        let gameTimer = 5;
         function runGameEngine() {
             if(!gameActive) {
                 gameTimer -= 1;
@@ -532,11 +464,10 @@
                     gameTimer = 5;
                 }
             } else {
-                currentMultiplier += 0.03;
+                currentMultiplier += 0.04;
                 document.getElementById('multiplierValue').innerText = currentMultiplier.toFixed(2) + 'x';
                 document.getElementById('gameStatusText').innerText = "FLYING...";
 
-                // Draw flight animation on canvas
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.beginPath();
                 ctx.moveTo(0, canvas.height);
