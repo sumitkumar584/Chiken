@@ -287,4 +287,272 @@
 
         // Firebase Configuration (Replace with your Firebase Project config)
         const firebaseConfig = {
-     
+            apiKey: "AIzaSyDummyKeyForGitHubExport-12345",
+            authDomain: "aviator-game-app.firebaseapp.com",
+            projectId: "aviator-game-app",
+            storageBucket: "aviator-game-app.appspot.com",
+            messagingSenderId: "1234567890",
+            appId: "1:1234567890:web:abcdef"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+        let userBalance = 1000.00; // Default demo balance if offline
+
+        // Expose Firebase objects globally for game logic
+        window.firebaseAuth = auth;
+        window.firebaseDb = db;
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                document.getElementById('authContainer').classList.add('hidden');
+                document.getElementById('userDashboard').classList.remove('hidden');
+                document.getElementById('profileEmailDisplay').innerText = user.email;
+                
+                // Fetch user doc from Firestore
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
+                if (userSnap.exists()) {
+                    userBalance = userSnap.data().balance || 1000;
+                } else {
+                    await setDoc(userRef, { email: user.email, balance: 1000 });
+                    userBalance = 1000;
+                }
+                updateBalanceDisplay();
+            } else {
+                currentUser = null;
+                document.getElementById('authContainer').classList.remove('hidden');
+                document.getElementById('userDashboard').classList.add('hidden');
+            }
+        });
+
+        window.handleEmailLogin = async () => {
+            const email = document.getElementById('authEmail').value;
+            const pass = document.getElementById('authPassword').value;
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+                showToast("Login Successful!");
+                switchTab('home');
+            } catch (err) { showToast("Error: " + err.message); }
+        };
+
+        window.handleEmailRegister = async () => {
+            const email = document.getElementById('authEmail').value;
+            const pass = document.getElementById('authPassword').value;
+            try {
+                const res = await createUserWithEmailAndPassword(auth, email, pass);
+                await setDoc(doc(db, "users", res.user.uid), { email: email, balance: 1000 });
+                showToast("Account Created & Logged In!");
+                switchTab('home');
+            } catch (err) { showToast("Error: " + err.message); }
+        };
+
+        window.handleGoogleLogin = async () => {
+            const provider = new GoogleAuthProvider();
+            try {
+                const res = await signInWithPopup(auth, provider);
+                const userRef = doc(db, "users", res.user.uid);
+                const userSnap = await getDoc(userRef);
+                if (!userSnap.exists()) {
+                    await setDoc(userRef, { email: res.user.email, balance: 1000 });
+                }
+                showToast("Google Login Success!");
+                switchTab('home');
+            } catch (err) { showToast("Error: " + err.message); }
+        };
+
+        window.handleLogout = async () => {
+            await signOut(auth);
+            showToast("Logged out successfully");
+        };
+    </script>
+
+    <!-- FRONTEND GAME & APP LOGIC -->
+    <script>
+        let currentTab = 'home';
+        let balance = 1000.00;
+        let gameActive = false;
+        let currentMultiplier = 1.00;
+        let crashMultiplier = 2.00;
+        let betPlaced1 = false;
+        let betPlaced2 = false;
+        let betAmount1 = 100;
+        let betAmount2 = 100;
+
+        function updateBalanceDisplay() {
+            document.getElementById('headerBalance').innerText = '₹' + balance.toFixed(2);
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            ['home', 'deposit', 'withdraw', 'profile', 'admin'].forEach(t => {
+                const el = document.getElementById('view' + t.charAt(0).toUpperCase() + t.slice(1));
+                if (el) el.classList.add('hidden');
+                const nav = document.getElementById('nav' + t.charAt(0).toUpperCase() + t.slice(1));
+                if (nav) nav.classList.replace('text-red-500', 'text-gray-400');
+            });
+
+            const activeEl = document.getElementById('view' + tab.charAt(0).toUpperCase() + tab.slice(1));
+            if (activeEl) activeEl.classList.remove('hidden');
+            const activeNav = document.getElementById('nav' + tab.charAt(0).toUpperCase() + tab.slice(1));
+            if (activeNav) activeNav.classList.replace('text-gray-400', 'text-red-500');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.classList.remove('hidden');
+            setTimeout(() => t.classList.add('hidden'), 3000);
+        }
+
+        function setBetAmount(box, amt) {
+            document.getElementById('betInput' + box).value = amt;
+            if(box === 1) betAmount1 = amt; else betAmount2 = amt;
+        }
+
+        function toggleBet(box) {
+            const inputVal = parseFloat(document.getElementById('betInput' + box).value);
+            if(balance < inputVal) {
+                showToast("Insufficient balance! Please deposit.");
+                return;
+            }
+            if(box === 1) {
+                betPlaced1 = !betPlaced1;
+                const btn = document.getElementById('betBtn1');
+                if(betPlaced1) {
+                    balance -= inputVal;
+                    updateBalanceDisplay();
+                    btn.innerText = "CANCEL BET";
+                    btn.className = "w-full py-3 rounded-xl font-bold tracking-wider uppercase bg-red-600 hover:bg-red-500 transition shadow-lg text-white";
+                } else {
+                    balance += inputVal;
+                    updateBalanceDisplay();
+                    btn.innerText = "BET ₹" + inputVal;
+                    btn.className = "w-full py-3 rounded-xl font-bold tracking-wider uppercase bg-green-600 hover:bg-green-500 transition shadow-lg text-white";
+                }
+            } else {
+                betPlaced2 = !betPlaced2;
+                const btn = document.getElementById('betBtn2');
+                if(betPlaced2) {
+                    balance -= inputVal;
+                    updateBalanceDisplay();
+                    btn.innerText = "CANCEL BET";
+                    btn.className = "w-full py-3 rounded-xl font-bold tracking-wider uppercase bg-red-600 hover:bg-red-500 transition shadow-lg text-white";
+                } else {
+                    balance += inputVal;
+                    updateBalanceDisplay();
+                    btn.innerText = "BET ₹" + inputVal;
+                    btn.className = "w-full py-3 rounded-xl font-bold tracking-wider uppercase bg-green-600 hover:bg-green-500 transition shadow-lg text-white";
+                }
+            }
+        }
+
+        // UPI Deposit handler
+        document.getElementById('depositAmount').addEventListener('input', (e) => {
+            const val = e.target.value || 0;
+            document.getElementById('upiQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=merchant@upi&am=${val}`;
+            document.getElementById('phonepeLink').href = `phonepe://pay?pa=merchant@upi&am=${val}&cu=INR`;
+            document.getElementById('gpayLink').href = `tez://upi/pay?pa=merchant@upi&am=${val}&cu=INR`;
+        });
+
+        function submitDeposit() {
+            const amt = parseFloat(document.getElementById('depositAmount').value);
+            const utr = document.getElementById('utrInput').value;
+            if(!utr || utr.length < 12) {
+                showToast("Please enter a valid 12-digit UTR number!");
+                return;
+            }
+            balance += amt;
+            updateBalanceDisplay();
+            showToast("Deposit Verified & Credited Successfully!");
+            document.getElementById('utrInput').value = '';
+            switchTab('home');
+        }
+
+        function submitWithdrawal() {
+            const amt = parseFloat(document.getElementById('withdrawAmount').value);
+            const upi = document.getElementById('withdrawUpi').value;
+            if(!amt || amt <= 0 || !upi) {
+                showToast("Please enter valid withdrawal details!");
+                return;
+            }
+            if(balance < amt) {
+                showToast("Insufficient balance for withdrawal!");
+                return;
+            }
+            balance -= amt;
+            updateBalanceDisplay();
+            showToast("Withdrawal request submitted successfully!");
+            document.getElementById('withdrawAmount').value = '';
+            document.getElementById('withdrawUpi').value = '';
+            switchTab('home');
+        }
+
+        function openAdminPanel() {
+            const pass = document.getElementById('adminPassword').value;
+            const email = document.getElementById('adminEmail').value;
+            if(pass === "admin123" || email === "admin@aviator.com") {
+                switchTab('admin');
+                document.getElementById('adminStatBalance').innerText = '₹' + balance.toFixed(2);
+                showToast("Admin Login Successful!");
+            } else {
+                showToast("Invalid Admin Credentials!");
+            }
+        }
+
+        function setAdminCrashMultiplier() {
+            crashMultiplier = parseFloat(document.getElementById('adminCrashVal').value);
+            showToast("Crash Multiplier updated to " + crashMultiplier + "x");
+        }
+
+        // Canvas Game Loop Simulation
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        let gameTimer = 5;
+        function runGameEngine() {
+            if(!gameActive) {
+                gameTimer -= 1;
+                document.getElementById('gameStatusText').innerText = `NEXT ROUND IN ${gameTimer}s`;
+                document.getElementById('multiplierValue').innerText = "1.00x";
+                if(gameTimer <= 0) {
+                    gameActive = true;
+                    currentMultiplier = 1.00;
+                    gameTimer = 5;
+                }
+            } else {
+                currentMultiplier += 0.03;
+                document.getElementById('multiplierValue').innerText = currentMultiplier.toFixed(2) + 'x';
+                document.getElementById('gameStatusText').innerText = "FLYING...";
+
+                // Draw flight animation on canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.beginPath();
+                ctx.moveTo(0, canvas.height);
+                ctx.lineTo(canvas.width * (currentMultiplier / 10), canvas.height - (canvas.height * (currentMultiplier / 10)));
+                ctx.strokeStyle = '#ef4444';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                if(currentMultiplier >= crashMultiplier) {
+                    gameActive = false;
+                    document.getElementById('gameStatusText').innerText = "CRASHED @ " + currentMultiplier.toFixed(2) + 'x';
+                    showToast("Plane Crashed at " + currentMultiplier.toFixed(2) + 'x');
+                }
+            }
+        }
+        setInterval(runGameEngine, 200);
+    </script>
+</body>
+</html>
