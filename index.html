@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aviator - Ultimate Crash Game & Casino</title>
-    <!-- Tailwind CSS -->
+    <title>Aviator - Official Gaming Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Montserrat', sans-serif; background-color: #0b0e14; color: #ffffff; }
-        .glow-green { text-shadow: 0 0 10px rgba(74, 222, 128, 0.6); }
-        .glow-red { text-shadow: 0 0 10px rgba(248, 113, 113, 0.6); }
+        body { font-family: 'Montserrat', sans-serif; background-color: #0b0e14; color: #fff; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .glow-red { text-shadow: 0 0 15px rgba(239, 68, 68, 0.7); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between pb-20">
@@ -24,466 +20,265 @@
     <header class="bg-[#121622] border-b border-gray-800 px-4 py-3 flex items-center justify-between sticky top-0 z-50">
         <div class="flex items-center space-x-2">
             <span class="text-xl font-black tracking-wider text-red-500 italic flex items-center">
-                <i class="fa-solid fa-plane-departure mr-1.5 text-white"></i>AVIATOR
+                <i class="fa-solid fa-plane-departure mr-1.5 text-white animate-pulse"></i>AVIATOR
             </span>
         </div>
         <div class="flex items-center space-x-3">
-            <!-- Wallet Balance Badge -->
-            <div class="bg-[#1f2636] px-3 py-1.5 rounded-lg border border-gray-700 flex items-center space-x-2">
+            <div class="bg-[#1b2230] px-3 py-1.5 rounded-xl border border-gray-700 flex items-center space-x-2">
                 <span class="text-xs text-gray-400">Bal:</span>
-                <span id="headerBalance" class="font-bold text-green-400">₹1000.00</span>
+                <span id="headerBalance" class="font-extrabold text-green-400">₹1000.00</span>
             </div>
-            <!-- Profile Trigger -->
-            <button onclick="switchTab('profile')" class="w-9 h-9 rounded-full bg-gradient-to-tr from-red-600 to-orange-500 flex items-center justify-center font-bold text-sm shadow-md">
+            <button onclick="switchTab('profile')" class="w-9 h-9 rounded-full bg-gradient-to-tr from-red-600 to-orange-500 flex items-center justify-center font-bold shadow-lg">
                 <i class="fa-solid fa-user"></i>
             </button>
         </div>
     </header>
 
-    <!-- MAIN CONTENT CONTAINER -->
-    <main class="flex-grow max-w-lg w-full mx-auto p-3 overflow-y-auto">
+    <!-- MAIN APP CONTAINER -->
+    <main class="flex-grow max-w-md w-full mx-auto p-3 overflow-y-auto">
 
-        <!-- 1. HOME / GAME VIEW -->
-        <div id="viewHome" class="space-y-4">
+        <!-- 1. HOME TAB (GAME ARENA) -->
+        <div id="viewHome" class="space-y-3">
             <!-- Recent Multipliers Bar -->
-            <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar py-1" id="recentMultipliersBar">
-                <span class="bg-[#1f2636] px-2.5 py-1 rounded-full text-xs font-semibold text-green-400 border border-gray-700">2.14x</span>
-                <span class="bg-[#1f2636] px-2.5 py-1 rounded-full text-xs font-semibold text-red-400 border border-gray-700">1.02x</span>
-                <span class="bg-[#1f2636] px-2.5 py-1 rounded-full text-xs font-semibold text-yellow-400 border border-gray-700">5.80x</span>
-                <span class="bg-[#1f2636] px-2.5 py-1 rounded-full text-xs font-semibold text-green-400 border border-gray-700">1.45x</span>
+            <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar py-1">
+                <span class="bg-[#1f2636] px-3 py-1 rounded-full text-xs font-bold text-green-400 border border-gray-700">2.14x</span>
+                <span class="bg-[#1f2636] px-3 py-1 rounded-full text-xs font-bold text-red-400 border border-gray-700">1.02x</span>
+                <span class="bg-[#1f2636] px-3 py-1 rounded-full text-xs font-bold text-yellow-400 border border-gray-700">5.80x</span>
+                <span class="bg-[#1f2636] px-3 py-1 rounded-full text-xs font-bold text-green-400 border border-gray-700">1.45x</span>
             </div>
 
             <!-- Game Canvas Arena -->
-            <div class="relative bg-[#121622] border border-gray-800 rounded-2xl overflow-hidden shadow-2xl h-64 flex flex-col items-center justify-center">
+            <div class="relative bg-gradient-to-b from-[#121622] to-[#080a0f] border border-gray-800 rounded-2xl overflow-hidden shadow-2xl h-60 flex flex-col items-center justify-center">
                 <canvas id="gameCanvas" class="absolute inset-0 w-full h-full z-10"></canvas>
-                <!-- Center Multiplier Display -->
-                <div id="gameStatusDisplay" class="z-20 text-center">
-                    <div id="multiplierValue" class="text-5xl font-black tracking-wider text-white glow-green">1.00x</div>
+                <div class="z-20 text-center">
+                    <div id="multiplierValue" class="text-5xl font-black tracking-wider text-white glow-red">1.00x</div>
                     <div id="gameStatusText" class="text-xs tracking-widest uppercase text-gray-400 mt-1">Waiting for next round...</div>
                 </div>
             </div>
 
-            <!-- Dual Betting Controls Panel -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <!-- Dual Bet Controls -->
+            <div class="grid grid-cols-1 gap-3">
                 <!-- Bet Box 1 -->
-                <div class="bg-[#121622] border border-gray-800 rounded-xl p-3 flex flex-col space-y-3">
-                    <div class="flex justify-between items-center text-xs text-gray-400 font-medium">
-                        <span>Bet Control 1</span>
+                <div class="bg-[#121622] border border-gray-800 rounded-2xl p-3.5 space-y-3 shadow-lg">
+                    <div class="flex justify-between items-center text-xs text-gray-400 font-semibold">
+                        <span>Bet Panel 1</span>
                         <div class="space-x-1">
-                            <button onclick="setBetAmount(1, 100)" class="bg-[#1f2636] px-2 py-0.5 rounded text-white">+100</button>
-                            <button onclick="setBetAmount(1, 500)" class="bg-[#1f2636] px-2 py-0.5 rounded text-white">+500</button>
+                            <button onclick="setBet(1, 100)" class="bg-[#1b2230] px-2.5 py-1 rounded-lg text-white">+100</button>
+                            <button onclick="setBet(1, 500)" class="bg-[#1b2230] px-2.5 py-1 rounded-lg text-white">+500</button>
                         </div>
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <div class="relative flex-grow">
-                            <input type="number" id="betInput1" value="100" class="w-full bg-[#1b2230] border border-gray-700 rounded-lg px-3 py-2 text-white font-bold focus:outline-none focus:border-red-500">
-                        </div>
-                    </div>
-                    <button id="betBtn1" onclick="toggleBet(1)" class="w-full py-3 rounded-xl font-bold tracking-wider uppercase bg-green-600 hover:bg-green-500 transition shadow-lg text-white">
-                        BET ₹100
-                    </button>
-                </div>
-
-                <!-- Bet Box 2 -->
-                <div class="bg-[#121622] border border-gray-800 rounded-xl p-3 flex flex-col space-y-3">
-                    <div class="flex justify-between items-center text-xs text-gray-400 font-medium">
-                        <span>Bet Control 2</span>
-                        <div class="space-x-1">
-                            <button onclick="setBetAmount(2, 100)" class="bg-[#1f2636] px-2 py-0.5 rounded text-white">+100</button>
-                            <button onclick="setBetAmount(2, 500)" class="bg-[#1f2636] px-2 py-0.5 rounded text-white">+500</button>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <div class="relative flex-grow">
-                            <input type="number" id="betInput2" value="100" class="w-full bg-[#1b2230] border border-gray-700 rounded-lg px-3 py-2 text-white font-bold focus:outline-none focus:border-red-500">
-                        </div>
-                    </div>
-                    <button id="betBtn2" onclick="toggleBet(2)" class="w-full py-3 rounded-xl font-bold tracking-wider uppercase bg-green-600 hover:bg-green-500 transition shadow-lg text-white">
-                        BET ₹100
+                    <input type="number" id="betInput1" value="100" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold focus:outline-none focus:border-red-500">
+                    <button id="betBtn1" onclick="toggleBet(1)" class="w-full py-3 rounded-xl font-black tracking-wider uppercase bg-green-600 hover:bg-green-500 transition shadow-lg text-white">
+                        PLACE BET ₹100
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- 2. DEPOSIT VIEW -->
-        <div id="viewDeposit" class="hidden space-y-4">
-            <div class="bg-[#121622] border border-gray-800 rounded-2xl p-4 shadow-xl">
-                <h2 class="text-lg font-bold text-white mb-3 flex items-center"><i class="fa-solid fa-wallet mr-2 text-green-500"></i>Add Money via UPI</h2>
-                <div class="space-y-3">
-                    <div>
-                        <label class="text-xs text-gray-400 mb-1 block">Enter Amount (₹)</label>
-                        <input type="number" id="depositAmount" value="500" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2.5 text-white font-bold focus:outline-none focus:border-green-500">
-                    </div>
-                    <!-- Quick Amount Buttons -->
-                    <div class="grid grid-cols-4 gap-2">
-                        <button onclick="setQuickDeposit(100)" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-semibold hover:border-green-500">₹100</button>
-                        <button onclick="setQuickDeposit(500)" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-semibold hover:border-green-500">₹500</button>
-                        <button onclick="setQuickDeposit(1000)" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-semibold hover:border-green-500">₹1000</button>
-                        <button onclick="setQuickDeposit(5000)" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-semibold hover:border-green-500">₹5000</button>
-                    </div>
-                    <!-- Direct Payment Apps -->
-                    <div class="grid grid-cols-2 gap-2 pt-2">
-                        <a id="phonepeLink" href="#" class="bg-indigo-900/50 border border-indigo-700 py-2.5 rounded-xl text-center text-xs font-bold text-indigo-300 flex items-center justify-center space-x-1">
-                            <i class="fa-solid fa-mobile-screen"></i> <span>PhonePe Pay</span>
-                        </a>
-                        <a id="gpayLink" href="#" class="bg-blue-900/50 border border-blue-700 py-2.5 rounded-xl text-center text-xs font-bold text-blue-300 flex items-center justify-center space-x-1">
-                            <i class="fa-brands fa-google-pay text-lg"></i> <span>Google Pay</span>
-                        </a>
-                    </div>
-                    <!-- QR Box -->
-                    <div class="bg-white p-3 rounded-xl flex flex-col items-center justify-center space-y-2">
-                        <img id="upiQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=merchant@upi&am=500" alt="UPI QR" class="w-36 h-36">
-                        <span class="text-xs text-gray-700 font-semibold">Scan with any UPI App</span>
-                    </div>
-                    <!-- UTR Input Verification -->
-                    <div>
-                        <label class="text-xs text-gray-400 mb-1 block">Enter 12-Digit UTR / Ref Number</label>
-                        <input type="text" id="utrInput" placeholder="e.g. 432112345678" maxlength="12" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2.5 text-white font-bold focus:outline-none focus:border-green-500">
-                    </div>
-                    <button onclick="submitDeposit()" class="w-full py-3 bg-green-600 hover:bg-green-500 font-bold rounded-xl shadow-lg uppercase text-sm tracking-wider">
-                        Confirm & Verify Payment
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. WITHDRAW VIEW -->
-        <div id="viewWithdraw" class="hidden space-y-4">
+        <!-- 2. DEPOSIT TAB -->
+        <div id="viewDeposit" class="hidden space-y-3">
             <div class="bg-[#121622] border border-gray-800 rounded-2xl p-4 shadow-xl space-y-3">
-                <h2 class="text-lg font-bold text-white mb-2 flex items-center"><i class="fa-solid fa-money-bill-transfer mr-2 text-red-500"></i>Withdraw Funds</h2>
+                <h2 class="text-base font-bold text-white flex items-center"><i class="fa-solid fa-wallet mr-2 text-green-500"></i>Add Money via UPI</h2>
                 <div>
-                    <label class="text-xs text-gray-400 mb-1 block">Withdrawal Amount (₹)</label>
-                    <input type="number" id="withdrawAmount" placeholder="Enter Amount" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2.5 text-white font-bold focus:outline-none focus:border-red-500">
+                    <label class="text-xs text-gray-400 mb-1 block">Amount (₹)</label>
+                    <input type="number" id="depositAmount" value="500" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold">
+                </div>
+                <div class="grid grid-cols-4 gap-2">
+                    <button onclick="setDep(100)" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-bold">₹100</button>
+                    <button onclick="setDep(500)" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-bold">₹500</button>
+                    <button onclick="setDep(1000)" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-bold">₹1000</button>
+                    <button onclick="setDep(5000)" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-bold">₹5000</button>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-1">
+                    <a id="phonepeLink" href="#" class="bg-indigo-900/40 border border-indigo-700 py-2.5 rounded-xl text-center text-xs font-bold text-indigo-300 flex items-center justify-center space-x-1">
+                        <i class="fa-solid fa-mobile-screen"></i> <span>PhonePe</span>
+                    </a>
+                    <a id="gpayLink" href="#" class="bg-blue-900/40 border border-blue-700 py-2.5 rounded-xl text-center text-xs font-bold text-blue-300 flex items-center justify-center space-x-1">
+                        <i class="fa-brands fa-google-pay text-base"></i> <span>Google Pay</span>
+                    </a>
+                </div>
+                <div class="bg-white p-3 rounded-xl flex flex-col items-center justify-center space-y-1">
+                    <img id="upiQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=merchant@upi&am=500" alt="QR" class="w-32 h-32">
+                    <span class="text-[10px] text-gray-700 font-bold">Scan & Pay via any UPI App</span>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-400 mb-1 block">12-Digit UTR / Ref Number</label>
+                    <input type="text" id="utrInput" placeholder="Enter UTR after payment" maxlength="12" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold">
+                </div>
+                <button onclick="submitDeposit()" class="w-full py-3 bg-green-600 hover:bg-green-500 font-bold rounded-xl shadow-lg uppercase text-xs tracking-wider">
+                    Verify & Credit Deposit
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. WITHDRAW TAB -->
+        <div id="viewWithdraw" class="hidden space-y-3">
+            <div class="bg-[#121622] border border-gray-800 rounded-2xl p-4 shadow-xl space-y-3">
+                <h2 class="text-base font-bold text-white flex items-center"><i class="fa-solid fa-money-bill-transfer mr-2 text-red-500"></i>Withdraw Funds</h2>
+                <div>
+                    <label class="text-xs text-gray-400 mb-1 block">Amount (₹)</label>
+                    <input type="number" id="withdrawAmount" placeholder="Enter amount" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold">
                 </div>
                 <div>
                     <label class="text-xs text-gray-400 mb-1 block">UPI ID / VPA</label>
-                    <input type="text" id="withdrawUpi" placeholder="username@oksbi" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2.5 text-white font-bold focus:outline-none focus:border-red-500">
+                    <input type="text" id="withdrawUpi" placeholder="username@okhdfcbank" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold">
                 </div>
-                <button onclick="submitWithdrawal()" class="w-full py-3 bg-red-600 hover:bg-red-500 font-bold rounded-xl shadow-lg uppercase text-sm tracking-wider">
-                    Request Withdrawal
+                <button onclick="submitWithdraw()" class="w-full py-3 bg-red-600 hover:bg-red-500 font-bold rounded-xl shadow-lg uppercase text-xs tracking-wider">
+                    Submit Withdrawal Request
                 </button>
             </div>
         </div>
 
-        <!-- 4. PROFILE / ACCOUNT & AUTH VIEW -->
-        <div id="viewProfile" class="hidden space-y-4">
-            <!-- Auth Box -->
-            <div id="authContainer" class="bg-[#121622] border border-gray-800 rounded-2xl p-4 shadow-xl space-y-3">
-                <h2 class="text-lg font-bold text-white text-center mb-2" id="authTitle">User Login / Register</h2>
-                <div>
-                    <label class="text-xs text-gray-400 mb-1 block">Email Address</label>
-                    <input type="email" id="authEmail" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2.5 text-white font-bold focus:outline-none focus:border-red-500">
-                </div>
-                <div>
-                    <label class="text-xs text-gray-400 mb-1 block">Password</label>
-                    <input type="password" id="authPassword" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2.5 text-white font-bold focus:outline-none focus:border-red-500">
-                </div>
-                <div class="flex space-x-2 pt-1">
-                    <button onclick="handleEmailLogin()" class="flex-1 py-2.5 bg-red-600 hover:bg-red-500 font-bold rounded-xl text-sm">Login</button>
-                    <button onclick="handleEmailRegister()" class="flex-1 py-2.5 bg-gray-700 hover:bg-gray-600 font-bold rounded-xl text-sm">Register</button>
-                </div>
+        <!-- 4. PROFILE TAB -->
+        <div id="viewProfile" class="hidden space-y-3">
+            <div id="authBox" class="bg-[#121622] border border-gray-800 rounded-2xl p-4 shadow-xl space-y-3">
+                <h2 class="text-base font-bold text-white text-center">User Login</h2>
+                <input type="email" id="authEmail" placeholder="Email Address" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold text-sm">
+                <input type="password" id="authPass" placeholder="Password" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold text-sm">
+                <button onclick="handleLogin()" class="w-full py-2.5 bg-red-600 hover:bg-red-500 font-bold rounded-xl text-sm shadow-lg">Login / Register</button>
             </div>
-
-            <!-- User Dashboard Info -->
-            <div id="userDashboard" class="hidden bg-[#121622] border border-gray-800 rounded-2xl p-4 shadow-xl space-y-4">
-                <div class="flex items-center space-x-3 border-b border-gray-800 pb-3">
-                    <div class="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-xl font-bold">
-                        <i class="fa-solid fa-user-shield"></i>
-                    </div>
-                    <div>
-                        <div id="profileEmailDisplay" class="font-bold text-sm text-white">user@gmail.com</div>
-                        <div class="text-xs text-green-400 font-semibold">Active Wallet Connected</div>
-                    </div>
-                </div>
-                <button onclick="handleLogout()" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-red-400 font-bold rounded-xl text-sm">
-                    Logout
-                </button>
-            </div>
-
-            <!-- Admin Panel Trigger -->
-            <div class="bg-[#121622] border border-gray-800 rounded-2xl p-4 shadow-xl space-y-3">
-                <h3 class="font-bold text-sm text-gray-300">Admin Portal Access</h3>
-                <div>
-                    <label class="text-xs text-gray-400 mb-1 block">Admin Email</label>
-                    <input type="email" id="adminEmail" placeholder="admin@aviator.com" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold text-sm">
-                </div>
-                <div>
-                    <label class="text-xs text-gray-400 mb-1 block">Admin Password</label>
-                    <input type="password" id="adminPassword" placeholder="••••••••" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold text-sm">
-                </div>
-                <button onclick="openAdminPanel()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 font-bold rounded-xl text-sm shadow-md">
-                    Open Admin Dashboard
-                </button>
-            </div>
-        </div>
-
-        <!-- 5. ADMIN PANEL VIEW -->
-        <div id="viewAdmin" class="hidden space-y-4">
-            <div class="bg-[#121622] border border-gray-800 rounded-2xl p-4 shadow-xl space-y-4">
-                <div class="flex justify-between items-center border-b border-gray-800 pb-3">
-                    <h2 class="text-lg font-bold text-red-500 flex items-center"><i class="fa-solid fa-shield-halved mr-2"></i>Admin Dashboard</h2>
-                    <button onclick="switchTab('home')" class="bg-gray-800 px-3 py-1 rounded-lg text-xs font-bold text-gray-300">Close</button>
-                </div>
-                <!-- Stats Grid -->
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="bg-[#1b2230] p-3 rounded-xl border border-gray-700">
-                        <div class="text-xs text-gray-400">Total Users</div>
-                        <div id="adminStatUsers" class="text-xl font-black text-white mt-1">1</div>
-                    </div>
-                    <div class="bg-[#1b2230] p-3 rounded-xl border border-gray-700">
-                        <div class="text-xs text-gray-400">Platform Balance</div>
-                        <div id="adminStatBalance" class="text-xl font-black text-green-400 mt-1">₹1000</div>
-                    </div>
-                </div>
-                <!-- Game Multiplier Controller -->
-                <div class="space-y-2 pt-2">
-                    <label class="text-xs text-gray-400 block font-bold">Manual Crash Multiplier Override</label>
-                    <div class="flex space-x-2">
-                        <input type="number" id="adminCrashVal" step="0.1" value="2.00" class="flex-grow bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold text-sm">
-                        <button onclick="setAdminCrashMultiplier()" class="bg-green-600 px-4 py-2 rounded-xl font-bold text-xs">Set</button>
-                    </div>
-                </div>
+            <div id="userDash" class="hidden bg-[#121622] border border-gray-800 rounded-2xl p-4 shadow-xl space-y-3 text-center">
+                <div class="text-sm font-bold text-green-400" id="userEmailDisp">user@gmail.com</div>
+                <button onclick="handleLogout()" class="w-full py-2 bg-gray-800 text-red-400 font-bold rounded-xl text-xs">Logout</button>
             </div>
         </div>
 
     </main>
 
-    <!-- STICKY BOTTOM NAVIGATION BAR -->
-    <nav class="bg-[#121622] border-t border-gray-800 fixed bottom-0 left-0 right-0 z-50 max-w-lg mx-auto grid grid-cols-4 py-2 px-3 text-center">
+    <!-- STICKY BOTTOM NAVIGATION -->
+    <nav class="bg-[#121622] border-t border-gray-800 fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto grid grid-cols-4 py-2 px-2 text-center">
         <button onclick="switchTab('home')" id="navHome" class="flex flex-col items-center text-red-500">
-            <i class="fa-solid fa-house text-lg"></i>
-            <span class="text-[10px] font-semibold mt-1">Home</span>
+            <i class="fa-solid fa-house text-base"></i>
+            <span class="text-[10px] font-bold mt-0.5">Home</span>
         </button>
-        <button onclick="switchTab('deposit')" id="navDeposit" class="flex flex-col items-center text-gray-400 hover:text-white">
-            <i class="fa-solid fa-wallet text-lg"></i>
-            <span class="text-[10px] font-semibold mt-1">Deposit</span>
+        <button onclick="switchTab('deposit')" id="navDeposit" class="flex flex-col items-center text-gray-400">
+            <i class="fa-solid fa-wallet text-base"></i>
+            <span class="text-[10px] font-bold mt-0.5">Deposit</span>
         </button>
-        <button onclick="switchTab('withdraw')" id="navWithdraw" class="flex flex-col items-center text-gray-400 hover:text-white">
-            <i class="fa-solid fa-money-bill-transfer text-lg"></i>
-            <span class="text-[10px] font-semibold mt-1">Withdraw</span>
+        <button onclick="switchTab('withdraw')" id="navWithdraw" class="flex flex-col items-center text-gray-400">
+            <i class="fa-solid fa-money-bill-transfer text-base"></i>
+            <span class="text-[10px] font-bold mt-0.5">Withdraw</span>
         </button>
-        <button onclick="switchTab('profile')" id="navProfile" class="flex flex-col items-center text-gray-400 hover:text-white">
-            <i class="fa-solid fa-user text-lg"></i>
-            <span class="text-[10px] font-semibold mt-1">Profile</span>
+        <button onclick="switchTab('profile')" id="navProfile" class="flex flex-col items-center text-gray-400">
+            <i class="fa-solid fa-user text-base"></i>
+            <span class="text-[10px] font-bold mt-0.5">Profile</span>
         </button>
     </nav>
 
-    <!-- Toast Notification Banner -->
-    <div id="toast" class="fixed top-16 left-1/2 transform -translate-x-1/2 bg-gray-900 border border-gray-700 text-white px-4 py-2 rounded-xl shadow-2xl text-xs font-bold z-50 hidden transition-all duration-300">
-        Notification text here
-    </div>
+    <!-- Toast Banner -->
+    <div id="toast" class="fixed top-14 left-1/2 transform -translate-x-1/2 bg-gray-900 border border-gray-700 text-white px-3 py-1.5 rounded-xl shadow-2xl text-xs font-bold z-50 hidden"></div>
 
-    <!-- JAVASCRIPT APP LOGIC -->
     <script>
         let balance = 1000.00;
-        let gameActive = false;
-        let currentMultiplier = 1.00;
-        let crashMultiplier = 2.00;
-        let betPlaced1 = false;
-        let betPlaced2 = false;
-        let gameTimer = 5;
+        let gameActive = false, currentMultiplier = 1.00, crashMultiplier = 2.00, gameTimer = 5, betPlaced = false;
 
-        function updateBalanceDisplay() {
+        function updateBal() {
             document.getElementById('headerBalance').innerText = '₹' + balance.toFixed(2);
-            const adminBal = document.getElementById('adminStatBalance');
-            if(adminBal) adminBal.innerText = '₹' + balance.toFixed(2);
         }
 
         function switchTab(tab) {
-            ['home', 'deposit', 'withdraw', 'profile', 'admin'].forEach(t => {
-                const el = document.getElementById('view' + t.charAt(0).toUpperCase() + t.slice(1));
-                if (el) el.classList.add('hidden');
-                const nav = document.getElementById('nav' + t.charAt(0).toUpperCase() + t.slice(1));
-                if (nav) nav.classList.replace('text-red-500', 'text-gray-400');
+            ['home', 'deposit', 'withdraw', 'profile'].forEach(t => {
+                document.getElementById('view' + t.charAt(0).toUpperCase() + t.slice(1)).classList.add('hidden');
+                document.getElementById('nav' + t.charAt(0).toUpperCase() + t.slice(1)).classList.replace('text-red-500', 'text-gray-400');
             });
-
-            const activeEl = document.getElementById('view' + tab.charAt(0).toUpperCase() + tab.slice(1));
-            if (activeEl) activeEl.classList.remove('hidden');
-            const activeNav = document.getElementById('nav' + tab.charAt(0).toUpperCase() + tab.slice(1));
-            if (activeNav) activeNav.classList.replace('text-gray-400', 'text-red-500');
+            document.getElementById('view' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.remove('hidden');
+            document.getElementById('nav' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.replace('text-gray-400', 'text-red-500');
         }
 
         function showToast(msg) {
             const t = document.getElementById('toast');
-            t.innerText = msg;
-            t.classList.remove('hidden');
-            setTimeout(() => t.classList.add('hidden'), 3000);
+            t.innerText = msg; t.classList.remove('hidden');
+            setTimeout(() => t.classList.add('hidden'), 2500);
         }
 
-        function setBetAmount(box, amt) {
-            document.getElementById('betInput' + box).value = amt;
-        }
+        function setBet(box, amt) { document.getElementById('betInput1').value = amt; }
 
         function toggleBet(box) {
-            const inputVal = parseFloat(document.getElementById('betInput' + box).value);
-            if(balance < inputVal) {
-                showToast("Insufficient balance! Please deposit.");
-                return;
-            }
-            if(box === 1) {
-                betPlaced1 = !betPlaced1;
-                const btn = document.getElementById('betBtn1');
-                if(betPlaced1) {
-                    balance -= inputVal;
-                    updateBalanceDisplay();
-                    btn.innerText = "CANCEL BET";
-                    btn.className = "w-full py-3 rounded-xl font-bold tracking-wider uppercase bg-red-600 hover:bg-red-500 transition shadow-lg text-white";
-                } else {
-                    balance += inputVal;
-                    updateBalanceDisplay();
-                    btn.innerText = "BET ₹" + inputVal;
-                    btn.className = "w-full py-3 rounded-xl font-bold tracking-wider uppercase bg-green-600 hover:bg-green-500 transition shadow-lg text-white";
-                }
+            const amt = parseFloat(document.getElementById('betInput1').value);
+            if(balance < amt) { showToast("Low balance!"); return; }
+            betPlaced = !betPlaced;
+            const btn = document.getElementById('betBtn1');
+            if(betPlaced) {
+                balance -= amt; updateBal();
+                btn.innerText = "CANCEL BET"; btn.className = "w-full py-3 rounded-xl font-black uppercase bg-red-600 text-white shadow-lg";
             } else {
-                betPlaced2 = !betPlaced2;
-                const btn = document.getElementById('betBtn2');
-                if(betPlaced2) {
-                    balance -= inputVal;
-                    updateBalanceDisplay();
-                    btn.innerText = "CANCEL BET";
-                    btn.className = "w-full py-3 rounded-xl font-bold tracking-wider uppercase bg-red-600 hover:bg-red-500 transition shadow-lg text-white";
-                } else {
-                    balance += inputVal;
-                    updateBalanceDisplay();
-                    btn.innerText = "BET ₹" + inputVal;
-                    btn.className = "w-full py-3 rounded-xl font-bold tracking-wider uppercase bg-green-600 hover:bg-green-500 transition shadow-lg text-white";
-                }
+                balance += amt; updateBal();
+                btn.innerText = "PLACE BET ₹" + amt; btn.className = "w-full py-3 rounded-xl font-black uppercase bg-green-600 text-white shadow-lg";
             }
         }
 
-        function setQuickDeposit(amt) {
+        function setDep(amt) {
             document.getElementById('depositAmount').value = amt;
-            updateDepositLinks(amt);
+            updateDepLinks(amt);
         }
 
-        function updateDepositLinks(val) {
-            document.getElementById('upiQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=merchant@upi&am=${val}`;
+        function updateDepLinks(val) {
+            document.getElementById('upiQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=merchant@upi&am=${val}`;
             document.getElementById('phonepeLink').href = `phonepe://pay?pa=merchant@upi&am=${val}&cu=INR`;
             document.getElementById('gpayLink').href = `tez://upi/pay?pa=merchant@upi&am=${val}&cu=INR`;
         }
-
-        document.getElementById('depositAmount').addEventListener('input', (e) => {
-            updateDepositLinks(e.target.value || 0);
-        });
-        updateDepositLinks(500);
+        document.getElementById('depositAmount').addEventListener('input', (e) => updateDepLinks(e.target.value || 0));
+        updateDepLinks(500);
 
         function submitDeposit() {
             const amt = parseFloat(document.getElementById('depositAmount').value);
             const utr = document.getElementById('utrInput').value;
-            if(!utr || utr.length < 12) {
-                showToast("Please enter a valid 12-digit UTR number!");
-                return;
-            }
-            balance += amt;
-            updateBalanceDisplay();
-            showToast("Deposit Verified & Credited Successfully!");
+            if(!utr || utr.length < 12) { showToast("Enter valid 12-digit UTR!"); return; }
+            balance += amt; updateBal();
+            showToast("Deposit Credited Successfully!");
             document.getElementById('utrInput').value = '';
             switchTab('home');
         }
 
-        function submitWithdrawal() {
+        function submitWithdraw() {
             const amt = parseFloat(document.getElementById('withdrawAmount').value);
             const upi = document.getElementById('withdrawUpi').value;
-            if(!amt || amt <= 0 || !upi) {
-                showToast("Please enter valid withdrawal details!");
-                return;
-            }
-            if(balance < amt) {
-                showToast("Insufficient balance for withdrawal!");
-                return;
-            }
-            balance -= amt;
-            updateBalanceDisplay();
-            showToast("Withdrawal request submitted successfully!");
-            document.getElementById('withdrawAmount').value = '';
-            document.getElementById('withdrawUpi').value = '';
+            if(!amt || !upi || balance < amt) { showToast("Invalid withdrawal details!"); return; }
+            balance -= amt; updateBal();
+            showToast("Withdrawal requested successfully!");
             switchTab('home');
         }
 
-        function handleEmailLogin() {
+        function handleLogin() {
             const email = document.getElementById('authEmail').value;
-            if(!email) { showToast("Enter email!"); return; }
-            document.getElementById('authContainer').classList.add('hidden');
-            document.getElementById('userDashboard').classList.remove('hidden');
-            document.getElementById('profileEmailDisplay').innerText = email;
+            if(!email) { showToast("Enter email"); return; }
+            document.getElementById('authBox').classList.add('hidden');
+            document.getElementById('userDash').classList.remove('hidden');
+            document.getElementById('userEmailDisp').innerText = email;
             showToast("Login Successful!");
-            switchTab('home');
         }
-
-        function handleEmailRegister() {
-            const email = document.getElementById('authEmail').value;
-            if(!email) { showToast("Enter email!"); return; }
-            document.getElementById('authContainer').classList.add('hidden');
-            document.getElementById('userDashboard').classList.remove('hidden');
-            document.getElementById('profileEmailDisplay').innerText = email;
-            showToast("Account Created & Logged In!");
-            switchTab('home');
-        }
-
         function handleLogout() {
-            document.getElementById('authContainer').classList.remove('hidden');
-            document.getElementById('userDashboard').classList.add('hidden');
-            showToast("Logged out successfully");
+            document.getElementById('authBox').classList.remove('hidden');
+            document.getElementById('userDash').classList.add('hidden');
+            showToast("Logged out");
         }
 
-        function openAdminPanel() {
-            const pass = document.getElementById('adminPassword').value;
-            const email = document.getElementById('adminEmail').value;
-            if(pass === "admin123" || email === "admin@aviator.com") {
-                switchTab('admin');
-                showToast("Admin Login Successful!");
-            } else {
-                showToast("Invalid Admin Credentials! Use password: admin123");
-            }
-        }
-
-        function setAdminCrashMultiplier() {
-            crashMultiplier = parseFloat(document.getElementById('adminCrashVal').value);
-            showToast("Crash Multiplier updated to " + crashMultiplier + "x");
-        }
-
-        // Canvas Game Loop Simulation
+        // Canvas Game Engine
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
+        function resize() { canvas.width = canvas.parentElement.clientWidth; canvas.height = canvas.parentElement.clientHeight; }
+        window.addEventListener('resize', resize); resize();
 
-        function resizeCanvas() {
-            canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = canvas.parentElement.clientHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        function runGameEngine() {
+        setInterval(() => {
             if(!gameActive) {
-                gameTimer -= 1;
+                gameTimer--;
                 document.getElementById('gameStatusText').innerText = `NEXT ROUND IN ${gameTimer}s`;
                 document.getElementById('multiplierValue').innerText = "1.00x";
-                if(gameTimer <= 0) {
-                    gameActive = true;
-                    currentMultiplier = 1.00;
-                    gameTimer = 5;
-                }
+                if(gameTimer <= 0) { gameActive = true; currentMultiplier = 1.00; gameTimer = 5; }
             } else {
-                currentMultiplier += 0.04;
+                currentMultiplier += 0.05;
                 document.getElementById('multiplierValue').innerText = currentMultiplier.toFixed(2) + 'x';
                 document.getElementById('gameStatusText').innerText = "FLYING...";
-
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.beginPath();
-                ctx.moveTo(0, canvas.height);
-                ctx.lineTo(canvas.width * (currentMultiplier / 10), canvas.height - (canvas.height * (currentMultiplier / 10)));
-                ctx.strokeStyle = '#ef4444';
-                ctx.lineWidth = 3;
-                ctx.stroke();
-
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                ctx.beginPath(); ctx.moveTo(0, canvas.height);
+                ctx.lineTo(canvas.width*(currentMultiplier/10), canvas.height - (canvas.height*(currentMultiplier/10)));
+                ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 3; ctx.stroke();
                 if(currentMultiplier >= crashMultiplier) {
                     gameActive = false;
                     document.getElementById('gameStatusText').innerText = "CRASHED @ " + currentMultiplier.toFixed(2) + 'x';
-                    showToast("Plane Crashed at " + currentMultiplier.toFixed(2) + 'x');
                 }
             }
-        }
-        setInterval(runGameEngine, 200);
+        }, 200);
     </script>
 </body>
 </html>
