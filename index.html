@@ -3,7 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FilmyFly - Watch Movies Online</title>
+    <title>FilmyFly - Watch Bollywood, Hollywood & South Hindi Dubbed Movies Online</title>
+    
+    <!-- Advanced SEO Meta Tags for #1 Ranking -->
+    <meta name="description" content="FilmyFly - Watch and download latest Bollywood, Hollywood, South Indian Hindi dubbed movies, and web series online in HD quality for free.">
+    <meta name="keywords" content="FilmyFly, Filmysky, watch movies online, HD movies download, south indian hindi dubbed movies, bollywood movies, hollywood movies, web series">
+    <meta name="author" content="Sumit Pandey">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media SEO -->
+    <meta property="og:title" content="FilmyFly - Watch Movies Online">
+    <meta property="og:description" content="Stream latest Bollywood, Hollywood & South Indian movies in HD on FilmyFly.">
+    <meta property="og:type" content="website">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -58,25 +70,11 @@
             justify-content: center;
         }
 
-        .header-brand {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
         .header-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
             color: white;
             letter-spacing: 0.5px;
-        }
-
-        .ceo-tag {
-            font-size: 10px;
-            color: var(--accent);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         /* Main Content */
@@ -303,6 +301,40 @@
             color: var(--accent);
         }
 
+        /* Pagination Styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .page-btn {
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .page-btn:hover:not(:disabled) {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        #pageIndicator {
+            font-size: 14px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
         .view-section { display: none; }
         .view-section.active { display: block; }
     </style>
@@ -313,10 +345,7 @@
         <button class="back-btn" onclick="goHome()" aria-label="Go back">
             <i class="fas fa-arrow-left"></i>
         </button>
-        <div class="header-brand">
-            <h1 class="header-title" id="headerTitle">FilmyFly</h1>
-            <span class="ceo-tag">CEO : Sumit Pandey</span>
-        </div>
+        <h1 class="header-title" id="headerTitle">FilmyFly</h1>
         <button class="back-btn" onclick="toggleFullscreen()" aria-label="Fullscreen">
             <i class="fas fa-expand"></i>
         </button>
@@ -330,6 +359,13 @@
             <h2 class="section-title">FilmyFly Latest Movies</h2>
             <div id="moviesGrid" class="movies-grid">
                 <div class="text-slate-400 text-sm col-span-full py-8 text-center">Loading movies from Firebase...</div>
+            </div>
+            
+            <!-- Pagination Controls -->
+            <div id="paginationContainer" class="pagination" style="display:none;">
+                <button id="prevBtn" class="page-btn" onclick="changePage(-1)"><i class="fas fa-arrow-left mr-1"></i> Previous</button>
+                <span id="pageIndicator">Page 1 of 1</span>
+                <button id="nextBtn" class="page-btn" onclick="changePage(1)">Next <i class="fas fa-arrow-right ml-1"></i></button>
             </div>
         </div>
 
@@ -394,7 +430,9 @@
             measurementId: "G-GT8CLQYYL4"
         };
 
-        let allMoviesData = {};
+        let allMoviesArray = [];
+        let currentPage = 1;
+        const moviesPerPage = 20; // Ek baar me 20 movies load hongi
         let activeMovie = null;
         let currentServer = 'slast';
         let isVideoLoaded = false;
@@ -407,15 +445,23 @@
             
             get(child(dbRef, "filmysky/content")).then((snapshot) => {
                 if (snapshot.exists()) {
-                    allMoviesData = snapshot.val();
+                    const rawData = snapshot.val();
+                    
+                    allMoviesArray = Object.entries(rawData);
+                    // Latest movies ko pehle show karne ke liye sort kiya
+                    allMoviesArray.sort((a, b) => {
+                        let dateA = new Date(a[1].createdAt || a[1].updatedAt || a[1].year || 0);
+                        let dateB = new Date(b[1].createdAt || b[1].updatedAt || b[1].year || 0);
+                        return dateB - dateA;
+                    });
                     
                     const urlParams = new URLSearchParams(window.location.search);
                     const movieId = urlParams.get('id');
 
-                    if (movieId && allMoviesData[movieId]) {
-                        openPlayer(movieId, allMoviesData[movieId]);
+                    if (movieId && rawData[movieId]) {
+                        openPlayer(movieId, rawData[movieId]);
                     } else {
-                        renderCatalog(allMoviesData);
+                        renderCatalog();
                     }
                 } else {
                     grid.innerHTML = `<div class="text-amber-400 text-xs col-span-full py-8 text-center">No movies found inside 'content'.</div>`;
@@ -428,24 +474,29 @@
             grid.innerHTML = `<div class="text-red-400 text-xs col-span-full py-8 text-center">Init Error: ${error.message}</div>`;
         }
 
-        function renderCatalog(data) {
+        function renderCatalog() {
             grid.innerHTML = "";
-            let count = 0;
+            
+            if (allMoviesArray.length === 0) {
+                grid.innerHTML = `<div class="text-amber-400 text-xs col-span-full py-8 text-center">Catalog is empty.</div>`;
+                document.getElementById('paginationContainer').style.display = 'none';
+                return;
+            }
 
-            let moviesArray = Object.entries(data);
-            moviesArray.sort((a, b) => {
-                let dateA = new Date(a[1].createdAt || a[1].updatedAt || a[1].year || 0);
-                let dateB = new Date(b[1].createdAt || b[1].updatedAt || b[1].year || 0);
-                return dateB - dateA;
-            });
+            const totalPages = Math.ceil(allMoviesArray.length / moviesPerPage);
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
 
-            moviesArray.forEach(([key, movie]) => {
+            const startIdx = (currentPage - 1) * moviesPerPage;
+            const endIdx = startIdx + moviesPerPage;
+            const currentMovies = allMoviesArray.slice(startIdx, endIdx);
+
+            currentMovies.forEach(([key, movie]) => {
                 if (!movie) return;
                 
                 const title = movie.title || movie.Title || movie.name || "Untitled Movie";
                 const poster = movie.poster || movie.Poster || movie.image || 'https://via.placeholder.com/300x450?text=No+Poster';
 
-                count++;
                 const card = document.createElement('div');
                 card.className = "movie-card";
                 card.innerHTML = `
@@ -458,7 +509,6 @@
                     </div>
                 `;
                 
-                // Poster ya card click hone par filmyskywebsite.netlify.app par redirect karega
                 card.onclick = () => {
                     window.location.href = `https://filmyskywebsite.netlify.app/?id=${key}`;
                 };
@@ -466,9 +516,21 @@
                 grid.appendChild(card);
             });
 
-            if(count === 0) {
-                grid.innerHTML = `<div class="text-amber-400 text-xs col-span-full py-8 text-center">Catalog is empty.</div>`;
+            // Pagination UI update
+            if (totalPages > 1) {
+                document.getElementById('paginationContainer').style.display = 'flex';
+                document.getElementById('pageIndicator').textContent = `Page ${currentPage} of ${totalPages}`;
+                document.getElementById('prevBtn').disabled = currentPage === 1;
+                document.getElementById('nextBtn').disabled = currentPage === totalPages;
+            } else {
+                document.getElementById('paginationContainer').style.display = 'none';
             }
+        }
+
+        window.changePage = function(direction) {
+            currentPage += direction;
+            renderCatalog();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         window.openPlayer = function(key, movie) {
