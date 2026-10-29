@@ -3,282 +3,550 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aviator - Official Gaming Platform</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <title>FilmyFly - Watch Movies Online</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Montserrat', sans-serif; background-color: #0b0e14; color: #fff; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .glow-red { text-shadow: 0 0 15px rgba(239, 68, 68, 0.7); }
+        :root {
+            --bg: #0f0f0f;
+            --card: #1a1a1a;
+            --ink: #ffffff;
+            --muted: #aaaaaa;
+            --accent: #ff2d95;
+            --chip: #2a2a2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #222;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--card);
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: 0.5px;
+        }
+
+        .ceo-tag {
+            font-size: 10px;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 90px 16px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Video Player Container */
+        .player-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .video-player {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #000;
+        }
+
+        .player-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .player-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 45, 149, 0.9);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+
+        /* Action Buttons */
+        .player-actions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .action-btn {
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .action-btn:hover {
+            background: #252525;
+            border-color: var(--accent);
+        }
+
+        /* Content Info */
+        .content-info {
+            margin-bottom: 20px;
+        }
+
+        .content-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .content-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--muted);
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        .rating-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 215, 0, 0.15);
+            color: #ffd700;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Controls */
+        .controls {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            margin-bottom: 16px;
+        }
+
+        .control-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            color: var(--muted);
+        }
+
+        .server-select {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: var(--ink);
+            font-size: 14px;
+            outline: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23aab1c2' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+
+        /* Catalog / Home View Styles */
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            border-left: 4px solid var(--accent);
+            padding-left: 10px;
+        }
+
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+        @media(min-width: 640px) { .movies-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+        @media(min-width: 768px) { .movies-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+        @media(min-width: 1024px) { .movies-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+
+        .movie-card {
+            background: var(--card);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .movie-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .movie-poster {
+            aspect-ratio: 2/3;
+            width: 100%;
+            background: #222;
+            position: relative;
+            overflow: hidden;
+        }
+        .movie-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .movie-details {
+            padding: 10px;
+        }
+
+        .movie-name {
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 4px;
+        }
+
+        .watch-tag {
+            font-size: 11px;
+            color: var(--accent);
+        }
+
+        .view-section { display: none; }
+        .view-section.active { display: block; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between pb-20">
-
-    <!-- TOP HEADER -->
-    <header class="bg-[#121622] border-b border-gray-800 px-4 py-3 flex items-center justify-between sticky top-0 z-50">
-        <div class="flex items-center space-x-2">
-            <span class="text-xl font-black tracking-wider text-red-500 italic flex items-center">
-                <i class="fa-solid fa-plane-departure mr-1.5 text-white animate-pulse"></i>AVIATOR
-            </span>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <button class="back-btn" onclick="goHome()" aria-label="Go back">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="header-brand">
+            <h1 class="header-title" id="headerTitle">FilmyFly</h1>
+            <span class="ceo-tag">CEO : Sumit Pandey</span>
         </div>
-        <div class="flex items-center space-x-3">
-            <div class="bg-[#1b2230] px-3 py-1.5 rounded-xl border border-gray-700 flex items-center space-x-2">
-                <span class="text-xs text-gray-400">Bal:</span>
-                <span id="headerBalance" class="font-extrabold text-green-400">₹1000.00</span>
-            </div>
-            <button onclick="switchTab('profile')" class="w-9 h-9 rounded-full bg-gradient-to-tr from-red-600 to-orange-500 flex items-center justify-center font-bold shadow-lg">
-                <i class="fa-solid fa-user"></i>
-            </button>
-        </div>
+        <button class="back-btn" onclick="toggleFullscreen()" aria-label="Fullscreen">
+            <i class="fas fa-expand"></i>
+        </button>
     </header>
 
-    <!-- MAIN APP CONTAINER -->
-    <main class="flex-grow max-w-md w-full mx-auto p-3 overflow-y-auto">
-
-        <!-- 1. HOME TAB (GAME ARENA) -->
-        <div id="viewHome" class="space-y-3">
-            <!-- Recent Multipliers Bar -->
-            <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar py-1">
-                <span class="bg-[#1f2636] px-3 py-1 rounded-full text-xs font-bold text-green-400 border border-gray-700">2.14x</span>
-                <span class="bg-[#1f2636] px-3 py-1 rounded-full text-xs font-bold text-red-400 border border-gray-700">1.02x</span>
-                <span class="bg-[#1f2636] px-3 py-1 rounded-full text-xs font-bold text-yellow-400 border border-gray-700">5.80x</span>
-                <span class="bg-[#1f2636] px-3 py-1 rounded-full text-xs font-bold text-green-400 border border-gray-700">1.45x</span>
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- HOME / CATALOG VIEW -->
+        <div id="homeView" class="view-section active">
+            <h2 class="section-title">FilmyFly Latest Movies</h2>
+            <div id="moviesGrid" class="movies-grid">
+                <div class="text-slate-400 text-sm col-span-full py-8 text-center">Loading movies from Firebase...</div>
             </div>
+        </div>
 
-            <!-- Game Canvas Arena -->
-            <div class="relative bg-gradient-to-b from-[#121622] to-[#080a0f] border border-gray-800 rounded-2xl overflow-hidden shadow-2xl h-60 flex flex-col items-center justify-center">
-                <canvas id="gameCanvas" class="absolute inset-0 w-full h-full z-10"></canvas>
-                <div class="z-20 text-center">
-                    <div id="multiplierValue" class="text-5xl font-black tracking-wider text-white glow-red">1.00x</div>
-                    <div id="gameStatusText" class="text-xs tracking-widest uppercase text-gray-400 mt-1">Waiting for next round...</div>
-                </div>
-            </div>
-
-            <!-- Dual Bet Controls -->
-            <div class="grid grid-cols-1 gap-3">
-                <!-- Bet Box 1 -->
-                <div class="bg-[#121622] border border-gray-800 rounded-2xl p-3.5 space-y-3 shadow-lg">
-                    <div class="flex justify-between items-center text-xs text-gray-400 font-semibold">
-                        <span>Bet Panel 1</span>
-                        <div class="space-x-1">
-                            <button onclick="setBet(1, 100)" class="bg-[#1b2230] px-2.5 py-1 rounded-lg text-white">+100</button>
-                            <button onclick="setBet(1, 500)" class="bg-[#1b2230] px-2.5 py-1 rounded-lg text-white">+500</button>
-                        </div>
-                    </div>
-                    <input type="number" id="betInput1" value="100" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold focus:outline-none focus:border-red-500">
-                    <button id="betBtn1" onclick="toggleBet(1)" class="w-full py-3 rounded-xl font-black tracking-wider uppercase bg-green-600 hover:bg-green-500 transition shadow-lg text-white">
-                        PLACE BET ₹100
+        <!-- PLAYER VIEW -->
+        <div id="playerView" class="view-section">
+            <div class="player-container" id="playerContainer">
+                <iframe id="videoPlayer" class="video-player" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"></iframe>
+                <div class="player-overlay show" id="playerOverlay">
+                    <button class="play-button" onclick="loadVideo()">
+                        <i class="fas fa-play"></i>
                     </button>
                 </div>
             </div>
-        </div>
 
-        <!-- 2. DEPOSIT TAB -->
-        <div id="viewDeposit" class="hidden space-y-3">
-            <div class="bg-[#121622] border border-gray-800 rounded-2xl p-4 shadow-xl space-y-3">
-                <h2 class="text-base font-bold text-white flex items-center"><i class="fa-solid fa-wallet mr-2 text-green-500"></i>Add Money via UPI</h2>
-                <div>
-                    <label class="text-xs text-gray-400 mb-1 block">Amount (₹)</label>
-                    <input type="number" id="depositAmount" value="500" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold">
-                </div>
-                <div class="grid grid-cols-4 gap-2">
-                    <button onclick="setDep(100)" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-bold">₹100</button>
-                    <button onclick="setDep(500)" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-bold">₹500</button>
-                    <button onclick="setDep(1000)" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-bold">₹1000</button>
-                    <button onclick="setDep(5000)" class="bg-[#1b2230] border border-gray-700 py-1.5 rounded-lg text-xs font-bold">₹5000</button>
-                </div>
-                <div class="grid grid-cols-2 gap-2 pt-1">
-                    <a id="phonepeLink" href="#" class="bg-indigo-900/40 border border-indigo-700 py-2.5 rounded-xl text-center text-xs font-bold text-indigo-300 flex items-center justify-center space-x-1">
-                        <i class="fa-solid fa-mobile-screen"></i> <span>PhonePe</span>
-                    </a>
-                    <a id="gpayLink" href="#" class="bg-blue-900/40 border border-blue-700 py-2.5 rounded-xl text-center text-xs font-bold text-blue-300 flex items-center justify-center space-x-1">
-                        <i class="fa-brands fa-google-pay text-base"></i> <span>Google Pay</span>
-                    </a>
-                </div>
-                <div class="bg-white p-3 rounded-xl flex flex-col items-center justify-center space-y-1">
-                    <img id="upiQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=merchant@upi&am=500" alt="QR" class="w-32 h-32">
-                    <span class="text-[10px] text-gray-700 font-bold">Scan & Pay via any UPI App</span>
-                </div>
-                <div>
-                    <label class="text-xs text-gray-400 mb-1 block">12-Digit UTR / Ref Number</label>
-                    <input type="text" id="utrInput" placeholder="Enter UTR after payment" maxlength="12" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold">
-                </div>
-                <button onclick="submitDeposit()" class="w-full py-3 bg-green-600 hover:bg-green-500 font-bold rounded-xl shadow-lg uppercase text-xs tracking-wider">
-                    Verify & Credit Deposit
+            <!-- Quick Action Buttons -->
+            <div class="player-actions-grid">
+                <button class="action-btn" onclick="toggleFullscreen()">
+                    <i class="fas fa-expand text-pink-500"></i> Fullscreen View
                 </button>
+                <a id="externalPlayerBtn" href="#" target="_blank" class="action-btn">
+                    <i class="fas fa-external-link-alt text-pink-500"></i> Play in Browser
+                </a>
             </div>
-        </div>
 
-        <!-- 3. WITHDRAW TAB -->
-        <div id="viewWithdraw" class="hidden space-y-3">
-            <div class="bg-[#121622] border border-gray-800 rounded-2xl p-4 shadow-xl space-y-3">
-                <h2 class="text-base font-bold text-white flex items-center"><i class="fa-solid fa-money-bill-transfer mr-2 text-red-500"></i>Withdraw Funds</h2>
-                <div>
-                    <label class="text-xs text-gray-400 mb-1 block">Amount (₹)</label>
-                    <input type="number" id="withdrawAmount" placeholder="Enter amount" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold">
+            <div class="content-info">
+                <h1 class="content-title" id="movieTitle">Loading...</h1>
+                <div class="content-meta">
+                    <div class="rating-badge" id="ratingBadgeBox" style="display:none;">
+                        <i class="fas fa-star"></i>
+                        <span id="movieRating">0.0</span>
+                    </div>
+                    <span id="movieYear"></span>
                 </div>
-                <div>
-                    <label class="text-xs text-gray-400 mb-1 block">UPI ID / VPA</label>
-                    <input type="text" id="withdrawUpi" placeholder="username@okhdfcbank" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold">
+                <p id="movieDesc" class="text-xs text-slate-400 mt-2 leading-relaxed"></p>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls">
+                <div class="control-group">
+                    <label class="control-label">Streaming Server</label>
+                    <select class="server-select" id="serverSelect">
+                        <option value="slast">Slast Server (Primary)</option>
+                    </select>
                 </div>
-                <button onclick="submitWithdraw()" class="w-full py-3 bg-red-600 hover:bg-red-500 font-bold rounded-xl shadow-lg uppercase text-xs tracking-wider">
-                    Submit Withdrawal Request
-                </button>
             </div>
         </div>
-
-        <!-- 4. PROFILE TAB -->
-        <div id="viewProfile" class="hidden space-y-3">
-            <div id="authBox" class="bg-[#121622] border border-gray-800 rounded-2xl p-4 shadow-xl space-y-3">
-                <h2 class="text-base font-bold text-white text-center">User Login</h2>
-                <input type="email" id="authEmail" placeholder="Email Address" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold text-sm">
-                <input type="password" id="authPass" placeholder="Password" class="w-full bg-[#1b2230] border border-gray-700 rounded-xl px-3 py-2 text-white font-bold text-sm">
-                <button onclick="handleLogin()" class="w-full py-2.5 bg-red-600 hover:bg-red-500 font-bold rounded-xl text-sm shadow-lg">Login / Register</button>
-            </div>
-            <div id="userDash" class="hidden bg-[#121622] border border-gray-800 rounded-2xl p-4 shadow-xl space-y-3 text-center">
-                <div class="text-sm font-bold text-green-400" id="userEmailDisp">user@gmail.com</div>
-                <button onclick="handleLogout()" class="w-full py-2 bg-gray-800 text-red-400 font-bold rounded-xl text-xs">Logout</button>
-            </div>
-        </div>
-
     </main>
 
-    <!-- STICKY BOTTOM NAVIGATION -->
-    <nav class="bg-[#121622] border-t border-gray-800 fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto grid grid-cols-4 py-2 px-2 text-center">
-        <button onclick="switchTab('home')" id="navHome" class="flex flex-col items-center text-red-500">
-            <i class="fa-solid fa-house text-base"></i>
-            <span class="text-[10px] font-bold mt-0.5">Home</span>
-        </button>
-        <button onclick="switchTab('deposit')" id="navDeposit" class="flex flex-col items-center text-gray-400">
-            <i class="fa-solid fa-wallet text-base"></i>
-            <span class="text-[10px] font-bold mt-0.5">Deposit</span>
-        </button>
-        <button onclick="switchTab('withdraw')" id="navWithdraw" class="flex flex-col items-center text-gray-400">
-            <i class="fa-solid fa-money-bill-transfer text-base"></i>
-            <span class="text-[10px] font-bold mt-0.5">Withdraw</span>
-        </button>
-        <button onclick="switchTab('profile')" id="navProfile" class="flex flex-col items-center text-gray-400">
-            <i class="fa-solid fa-user text-base"></i>
-            <span class="text-[10px] font-bold mt-0.5">Profile</span>
-        </button>
-    </nav>
+    <!-- Firebase SDK & Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    <!-- Toast Banner -->
-    <div id="toast" class="fixed top-14 left-1/2 transform -translate-x-1/2 bg-gray-900 border border-gray-700 text-white px-3 py-1.5 rounded-xl shadow-2xl text-xs font-bold z-50 hidden"></div>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCJRUp-c9_zeqT6RTjrqf81MOZyI53QZqI",
+            authDomain: "filmysky-3454b.firebaseapp.com",
+            databaseURL: "https://filmysky-3454b-default-rtdb.firebaseio.com",
+            projectId: "Filmysky-3454b",
+            storageBucket: "filmysky-3454b.firebasestorage.app",
+            messagingSenderId: "146408648284",
+            appId: "1:146408648284:web:b8cb1891a533a24119c099",
+            measurementId: "G-GT8CLQYYL4"
+        };
 
-    <script>
-        let balance = 1000.00;
-        let gameActive = false, currentMultiplier = 1.00, crashMultiplier = 2.00, gameTimer = 5, betPlaced = false;
+        let allMoviesData = {};
+        let activeMovie = null;
+        let currentServer = 'slast';
+        let isVideoLoaded = false;
 
-        function updateBal() {
-            document.getElementById('headerBalance').innerText = '₹' + balance.toFixed(2);
-        }
+        const grid = document.getElementById('moviesGrid');
 
-        function switchTab(tab) {
-            ['home', 'deposit', 'withdraw', 'profile'].forEach(t => {
-                document.getElementById('view' + t.charAt(0).toUpperCase() + t.slice(1)).classList.add('hidden');
-                document.getElementById('nav' + t.charAt(0).toUpperCase() + t.slice(1)).classList.replace('text-red-500', 'text-gray-400');
+        try {
+            const app = initializeApp(firebaseConfig);
+            const dbRef = ref(getDatabase(app));
+            
+            get(child(dbRef, "filmysky/content")).then((snapshot) => {
+                if (snapshot.exists()) {
+                    allMoviesData = snapshot.val();
+                    
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const movieId = urlParams.get('id');
+
+                    if (movieId && allMoviesData[movieId]) {
+                        openPlayer(movieId, allMoviesData[movieId]);
+                    } else {
+                        renderCatalog(allMoviesData);
+                    }
+                } else {
+                    grid.innerHTML = `<div class="text-amber-400 text-xs col-span-full py-8 text-center">No movies found inside 'content'.</div>`;
+                }
+            }).catch((error) => {
+                grid.innerHTML = `<div class="text-red-400 text-xs col-span-full py-8 text-center">Error: ${error.message}</div>`;
             });
-            document.getElementById('view' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.remove('hidden');
-            document.getElementById('nav' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.replace('text-gray-400', 'text-red-500');
+
+        } catch (error) {
+            grid.innerHTML = `<div class="text-red-400 text-xs col-span-full py-8 text-center">Init Error: ${error.message}</div>`;
         }
 
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.innerText = msg; t.classList.remove('hidden');
-            setTimeout(() => t.classList.add('hidden'), 2500);
-        }
+        function renderCatalog(data) {
+            grid.innerHTML = "";
+            let count = 0;
 
-        function setBet(box, amt) { document.getElementById('betInput1').value = amt; }
+            let moviesArray = Object.entries(data);
+            moviesArray.sort((a, b) => {
+                let dateA = new Date(a[1].createdAt || a[1].updatedAt || a[1].year || 0);
+                let dateB = new Date(b[1].createdAt || b[1].updatedAt || b[1].year || 0);
+                return dateB - dateA;
+            });
 
-        function toggleBet(box) {
-            const amt = parseFloat(document.getElementById('betInput1').value);
-            if(balance < amt) { showToast("Low balance!"); return; }
-            betPlaced = !betPlaced;
-            const btn = document.getElementById('betBtn1');
-            if(betPlaced) {
-                balance -= amt; updateBal();
-                btn.innerText = "CANCEL BET"; btn.className = "w-full py-3 rounded-xl font-black uppercase bg-red-600 text-white shadow-lg";
-            } else {
-                balance += amt; updateBal();
-                btn.innerText = "PLACE BET ₹" + amt; btn.className = "w-full py-3 rounded-xl font-black uppercase bg-green-600 text-white shadow-lg";
+            moviesArray.forEach(([key, movie]) => {
+                if (!movie) return;
+                
+                const title = movie.title || movie.Title || movie.name || "Untitled Movie";
+                const poster = movie.poster || movie.Poster || movie.image || 'https://via.placeholder.com/300x450?text=No+Poster';
+
+                count++;
+                const card = document.createElement('div');
+                card.className = "movie-card";
+                card.innerHTML = `
+                    <div class="movie-poster">
+                        <img src="${poster}" alt="${title}" loading="lazy">
+                    </div>
+                    <div class="movie-details">
+                        <div class="movie-name" title="${title}">${title}</div>
+                        <span class="watch-tag"><i class="fas fa-play-circle mr-1"></i> Watch Online</span>
+                    </div>
+                `;
+                
+                // Poster ya card click hone par filmyskywebsite.netlify.app par redirect karega
+                card.onclick = () => {
+                    window.location.href = `https://filmyskywebsite.netlify.app/?id=${key}`;
+                };
+                
+                grid.appendChild(card);
+            });
+
+            if(count === 0) {
+                grid.innerHTML = `<div class="text-amber-400 text-xs col-span-full py-8 text-center">Catalog is empty.</div>`;
             }
         }
 
-        function setDep(amt) {
-            document.getElementById('depositAmount').value = amt;
-            updateDepLinks(amt);
-        }
+        window.openPlayer = function(key, movie) {
+            activeMovie = movie;
+            document.getElementById('homeView').classList.remove('active');
+            document.getElementById('playerView').classList.add('active');
+            window.scrollTo(0, 0);
 
-        function updateDepLinks(val) {
-            document.getElementById('upiQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=merchant@upi&am=${val}`;
-            document.getElementById('phonepeLink').href = `phonepe://pay?pa=merchant@upi&am=${val}&cu=INR`;
-            document.getElementById('gpayLink').href = `tez://upi/pay?pa=merchant@upi&am=${val}&cu=INR`;
-        }
-        document.getElementById('depositAmount').addEventListener('input', (e) => updateDepLinks(e.target.value || 0));
-        updateDepLinks(500);
+            const title = movie.title || movie.Title || movie.name || "Untitled Movie";
+            const desc = movie.description || movie.Description || movie.desc || movie.overview || "No description available.";
+            const rating = movie.rating || "";
+            const year = movie.year || "";
 
-        function submitDeposit() {
-            const amt = parseFloat(document.getElementById('depositAmount').value);
-            const utr = document.getElementById('utrInput').value;
-            if(!utr || utr.length < 12) { showToast("Enter valid 12-digit UTR!"); return; }
-            balance += amt; updateBal();
-            showToast("Deposit Credited Successfully!");
-            document.getElementById('utrInput').value = '';
-            switchTab('home');
-        }
-
-        function submitWithdraw() {
-            const amt = parseFloat(document.getElementById('withdrawAmount').value);
-            const upi = document.getElementById('withdrawUpi').value;
-            if(!amt || !upi || balance < amt) { showToast("Invalid withdrawal details!"); return; }
-            balance -= amt; updateBal();
-            showToast("Withdrawal requested successfully!");
-            switchTab('home');
-        }
-
-        function handleLogin() {
-            const email = document.getElementById('authEmail').value;
-            if(!email) { showToast("Enter email"); return; }
-            document.getElementById('authBox').classList.add('hidden');
-            document.getElementById('userDash').classList.remove('hidden');
-            document.getElementById('userEmailDisp').innerText = email;
-            showToast("Login Successful!");
-        }
-        function handleLogout() {
-            document.getElementById('authBox').classList.remove('hidden');
-            document.getElementById('userDash').classList.add('hidden');
-            showToast("Logged out");
-        }
-
-        // Canvas Game Engine
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        function resize() { canvas.width = canvas.parentElement.clientWidth; canvas.height = canvas.parentElement.clientHeight; }
-        window.addEventListener('resize', resize); resize();
-
-        setInterval(() => {
-            if(!gameActive) {
-                gameTimer--;
-                document.getElementById('gameStatusText').innerText = `NEXT ROUND IN ${gameTimer}s`;
-                document.getElementById('multiplierValue').innerText = "1.00x";
-                if(gameTimer <= 0) { gameActive = true; currentMultiplier = 1.00; gameTimer = 5; }
+            document.getElementById('headerTitle').textContent = title;
+            document.getElementById('movieTitle').textContent = title;
+            document.getElementById('movieDesc').textContent = desc;
+            document.getElementById('movieYear').textContent = year;
+            
+            if (rating) {
+                document.getElementById('movieRating').textContent = parseFloat(rating).toFixed(1);
+                document.getElementById('ratingBadgeBox').style.display = 'flex';
             } else {
-                currentMultiplier += 0.05;
-                document.getElementById('multiplierValue').innerText = currentMultiplier.toFixed(2) + 'x';
-                document.getElementById('gameStatusText').innerText = "FLYING...";
-                ctx.clearRect(0,0,canvas.width,canvas.height);
-                ctx.beginPath(); ctx.moveTo(0, canvas.height);
-                ctx.lineTo(canvas.width*(currentMultiplier/10), canvas.height - (canvas.height*(currentMultiplier/10)));
-                ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 3; ctx.stroke();
-                if(currentMultiplier >= crashMultiplier) {
-                    gameActive = false;
-                    document.getElementById('gameStatusText').innerText = "CRASHED @ " + currentMultiplier.toFixed(2) + 'x';
+                document.getElementById('ratingBadgeBox').style.display = 'none';
+            }
+
+            isVideoLoaded = false;
+            loadVideo();
+        }
+
+        window.goHome = function() {
+            window.location.href = "https://filmyskywebsite.netlify.app/";
+        }
+
+        window.loadVideo = function() {
+            if (!activeMovie) return;
+            const player = document.getElementById('videoPlayer');
+            const overlay = document.getElementById('playerOverlay');
+            
+            const mediaId = activeMovie.imdbId || activeMovie.tmdbId || activeMovie.id || "";
+            const videoUrl = `https://slast430did.com/play/${mediaId}`;
+
+            player.src = videoUrl;
+            overlay.classList.remove('show');
+            isVideoLoaded = true;
+
+            document.getElementById('externalPlayerBtn').href = videoUrl;
+        }
+
+        document.getElementById('serverSelect').addEventListener('change', function() {
+            currentServer = this.value;
+            if (isVideoLoaded) {
+                loadVideo();
+            }
+        });
+
+        window.toggleFullscreen = function() {
+            const container = document.getElementById('playerContainer');
+            try {
+                if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                    if (container.requestFullscreen) {
+                        container.requestFullscreen().catch(() => {});
+                    } else if (container.webkitRequestFullscreen) {
+                        container.webkitRequestFullscreen();
+                    }
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    }
+                }
+            } catch(e) {
+                if(activeMovie) {
+                    const mediaId = activeMovie.imdbId || activeMovie.tmdbId || activeMovie.id || "";
+                    window.open(`https://slast430did.com/play/${mediaId}`, '_blank');
                 }
             }
-        }, 200);
+        }
     </script>
 </body>
 </html>
