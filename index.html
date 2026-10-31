@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FilmySky - Watch & Download Latest Bollywood, Hollywood & South Hindi Dubbed Movies HD</title>
+    <title>FilmyFly - Watch & Download Latest Bollywood, Hollywood & South Hindi Dubbed Movies HD</title>
     
     <!-- Advanced SEO Meta Tags for #1 Ranking -->
-    <meta name="description" content="FilmySky - Watch and download latest Bollywood, Hollywood, South Indian Hindi dubbed movies, and web series online in HD quality for free without waiting.">
-    <meta name="keywords" content="FilmySky, FilmyFly, watch movies online, HD movies download, south indian hindi dubbed movies, bollywood movies, hollywood movies, web series">
+    <meta name="description" content="FilmyFly - Watch and download latest Bollywood, Hollywood, South Indian Hindi dubbed movies, and web series online in HD quality for free without waiting.">
+    <meta name="keywords" content="FilmyFly, Filmysky, watch movies online, HD movies download, south indian hindi dubbed movies, bollywood movies, hollywood movies, web series">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <link rel="canonical" href="https://filmyskywebsite.netlify.app/">
 
     <!-- Open Graph SEO -->
-    <meta property="og:title" content="FilmySky - Watch Movies Online in HD">
-    <meta property="og:description" content="Stream latest Bollywood, Hollywood & South Indian movies instantly in HD on FilmySky.">
+    <meta property="og:title" content="FilmyFly - Watch Movies Online in HD">
+    <meta property="og:description" content="Stream latest Bollywood, Hollywood & South Indian movies instantly in HD on FilmyFly.">
     <meta property="og:type" content="website">
 
     <!-- Schema.org Structured Data for Google #1 Ranking -->
@@ -21,7 +21,7 @@
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "FilmySky",
+      "name": "FilmyFly",
       "url": "https://filmyskywebsite.netlify.app/"
     }
     </script>
@@ -89,20 +89,20 @@
 <body>
     <header class="header">
         <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button>
-        <h1 class="header-title" id="headerTitle">FilmySky</h1>
+        <h1 class="header-title" id="headerTitle">FilmyFly</h1>
         <button class="back-btn" onclick="toggleFullscreen()"><i class="fas fa-expand"></i></button>
     </header>
 
     <main class="main-content">
         <!-- HOME / CATALOG VIEW -->
         <div id="homeView" class="view-section active">
-            <h2 class="section-title">FilmySky Latest Bollywood, Hollywood & South Movies</h2>
+            <h2 class="section-title">FilmyFly Latest Bollywood, Hollywood & South Movies</h2>
             
             <!-- Google Bot ke liye direct HTML content taaki 1ms me index ho -->
             <div id="moviesGrid" class="movies-grid">
                 <div class="movie-card">
                     <div class="movie-poster" style="background:#222; display:flex; align-items:center; justify-content:center; color:#555;">Loading HD...</div>
-                    <div class="movie-details"><div class="movie-name">Loading Latest Movies...</div><span class="watch-tag">FilmySky HD</span></div>
+                    <div class="movie-details"><div class="movie-name">Loading Latest Movies...</div><span class="watch-tag">FilmyFly HD</span></div>
                 </div>
             </div>
         </div>
@@ -143,8 +143,8 @@
 
     <!-- Google Bot ke liye hidden SEO keyword stuffing taaki turant rank ho -->
     <div style="display:none;" aria-hidden="true">
-        <h1>FilmySky Watch Online Movies</h1>
-        <p>FilmySky - Free download Bollywood movies, Hollywood Hindi dubbed movies, South Indian movies, web series in 720p 1080p HD quality.</p>
+        <h1>FilmyFly Watch Online Movies</h1>
+        <p>FilmyFly - Free download Bollywood movies, Hollywood Hindi dubbed movies, South Indian movies, web series in 720p 1080p HD quality.</p>
     </div>
 
     <!-- Firebase SDK & Script -->
@@ -205,7 +205,7 @@
             allMoviesArray.forEach(([key, movie]) => {
                 if (!movie) return;
                 const title = movie.title || movie.Title || movie.name || "Movie";
-                const poster = movie.poster || movie.Poster || movie.image || 'https://via.placeholder.com/300x450?text=FilmySky';
+                const poster = movie.poster || movie.Poster || movie.image || 'https://via.placeholder.com/300x450?text=FilmyFly';
 
                 htmlContent += `
                     <div class="movie-card" onclick="window.location.href='https://filmyskywebsite.netlify.app/?id=${key}'">
@@ -229,7 +229,7 @@
             window.scrollTo(0, 0);
 
             const title = movie.title || movie.Title || movie.name || "Movie";
-            const desc = movie.description || movie.Description || movie.desc || "Watch online on FilmySky.";
+            const desc = movie.description || movie.Description || movie.desc || "Watch online on FilmyFly.";
             const rating = movie.rating || "";
             const year = movie.year || "";
 
