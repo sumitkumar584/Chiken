@@ -3,34 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FilmyFly - Watch & Download Latest Bollywood, Hollywood & South Hindi Dubbed Movies HD</title>
+    <title>FilmySky - Watch & Download Latest Bollywood, Hollywood & South Hindi Dubbed Movies HD</title>
     
     <!-- Advanced SEO Meta Tags for #1 Ranking -->
-    <meta name="description" content="FilmyFly - Watch and download latest Bollywood, Hollywood, South Indian Hindi dubbed movies, and web series online in HD quality for free without waiting.">
-    <meta name="keywords" content="FilmyFly, FilmyFly, watch movies online, HD movies download, south indian hindi dubbed movies, bollywood movies, hollywood movies, web series, 1080p movies">
-    <meta name="author" content="FilmyFly">
+    <meta name="description" content="FilmySky - Watch and download latest Bollywood, Hollywood, South Indian Hindi dubbed movies, and web series online in HD quality for free without waiting.">
+    <meta name="keywords" content="FilmySky, FilmyFly, watch movies online, HD movies download, south indian hindi dubbed movies, bollywood movies, hollywood movies, web series">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <link rel="canonical" href="https://filmyskywebsite.netlify.app/">
 
-    <!-- Open Graph / Social Media SEO -->
-    <meta property="og:site_name" content="FilmyFly">
-    <meta property="og:title" content="FilmyFly - Watch Movies Online in HD">
-    <meta property="og:description" content="Stream latest Bollywood, Hollywood & South Indian movies instantly in HD on FilmyFly.">
+    <!-- Open Graph SEO -->
+    <meta property="og:title" content="FilmySky - Watch Movies Online in HD">
+    <meta property="og:description" content="Stream latest Bollywood, Hollywood & South Indian movies instantly in HD on FilmySky.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://filmyskywebsite.netlify.app/">
 
     <!-- Schema.org Structured Data for Google #1 Ranking -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "FilmyFly",
-      "url": "https://filmyskywebsite.netlify.app/",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://filmyskywebsite.netlify.app/?s={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
+      "name": "FilmySky",
+      "url": "https://filmyskywebsite.netlify.app/"
     }
     </script>
 
@@ -42,389 +34,102 @@
             --ink: #ffffff;
             --muted: #aaaaaa;
             --accent: #ff2d95;
-            --chip: #2a2a2a;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--ink);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Header */
         .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(15, 15, 15, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(20px);
+            padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;
             border-bottom: 1px solid #222;
         }
+        .back-btn { width: 40px; height: 40px; background: var(--card); border: none; color: white; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .header-title { font-size: 20px; font-weight: 700; color: white; }
 
-        .back-btn {
-            width: 40px;
-            height: 40px;
-            background: var(--card);
-            border: none;
-            color: white;
-            cursor: pointer;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .main-content { padding: 90px 16px 40px; max-width: 1200px; margin: 0 auto; }
+        
+        .player-container { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 12px; }
+        .video-player { width: 100%; height: 100%; border: none; background: #000; }
+        .player-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        .player-overlay.show { opacity: 1; pointer-events: all; }
+        .play-button { width: 80px; height: 80px; background: rgba(255, 45, 149, 0.9); border: none; border-radius: 50%; color: white; font-size: 24px; cursor: pointer; }
 
-        .header-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: white;
-            letter-spacing: 0.5px;
-        }
+        .player-actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .action-btn { background: var(--card); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 8px; text-align: center; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
 
-        /* Main Content */
-        .main-content {
-            padding: 90px 16px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+        .content-info { margin-bottom: 20px; }
+        .content-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+        .content-meta { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 14px; }
+        .rating-badge { display: flex; align-items: center; gap: 4px; background: rgba(255, 215, 0, 0.15); color: #ffd700; padding: 4px 8px; border-radius: 8px; font-size: 13px; font-weight: 600; }
 
-        /* Video Player Container */
-        .player-container {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: #000;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 12px;
-        }
+        .controls { background: var(--card); border-radius: 12px; padding: 16px; margin-bottom: 30px; }
+        .control-label { font-size: 14px; font-weight: 600; margin-bottom: 8px; display: block; color: var(--muted); }
+        .server-select { width: 100%; background: var(--bg); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 12px 16px; color: var(--ink); font-size: 14px; outline: none; }
 
-        .video-player {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: #000;
-        }
-
-        .player-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .player-overlay.show {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .play-button {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 45, 149, 0.9);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .play-button:hover {
-            background: var(--accent);
-            transform: scale(1.1);
-        }
-
-        /* Action Buttons */
-        .player-actions-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .action-btn {
-            background: var(--card);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: white;
-            padding: 12px;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            text-decoration: none;
-            transition: background 0.2s, border-color 0.2s;
-        }
-        .action-btn:hover {
-            background: #252525;
-            border-color: var(--accent);
-        }
-
-        /* Content Info */
-        .content-info {
-            margin-bottom: 20px;
-        }
-
-        .content-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .content-meta {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--muted);
-            font-size: 14px;
-            flex-wrap: wrap;
-        }
-
-        .rating-badge {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            background: rgba(255, 215, 0, 0.15);
-            color: #ffd700;
-            padding: 4px 8px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        /* Controls */
-        .controls {
-            background: var(--card);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 30px;
-        }
-
-        .control-group {
-            margin-bottom: 16px;
-        }
-
-        .control-label {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            display: block;
-            color: var(--muted);
-        }
-
-        .server-select {
-            width: 100%;
-            background: var(--bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 12px 16px;
-            color: var(--ink);
-            font-size: 14px;
-            outline: none;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23aab1c2' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 12px center;
-            background-repeat: no-repeat;
-            background-size: 16px;
-            padding-right: 40px;
-        }
-
-        /* Catalog / Home View Styles */
-        .section-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            border-left: 4px solid var(--accent);
-            padding-left: 10px;
-        }
-
-        .movies-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 12px;
-        }
+        .section-title { font-size: 20px; font-weight: 700; margin-bottom: 16px; border-left: 4px solid var(--accent); padding-left: 10px; }
+        .movies-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
         @media(min-width: 640px) { .movies-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
         @media(min-width: 768px) { .movies-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
         @media(min-width: 1024px) { .movies-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
 
-        .movie-card {
-            background: var(--card);
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
-            cursor: pointer;
-            transition: transform 0.2s;
-            display: flex;
-            flex-direction: column;
-        }
-        .movie-card:hover {
-            transform: translateY(-4px);
-        }
-
-        .movie-poster {
-            aspect-ratio: 2/3;
-            width: 100%;
-            background: #222;
-            position: relative;
-            overflow: hidden;
-        }
-        .movie-poster img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .movie-details {
-            padding: 10px;
-        }
-
-        .movie-name {
-            font-size: 13px;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-bottom: 4px;
-        }
-
-        .watch-tag {
-            font-size: 11px;
-            color: var(--accent);
-        }
-
-        /* Pagination Styles */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .page-btn {
-            background: var(--card);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-        .page-btn:hover:not(:disabled) {
-            background: var(--accent);
-            border-color: var(--accent);
-        }
-        .page-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        #pageIndicator {
-            font-size: 14px;
-            color: var(--muted);
-            font-weight: 600;
-        }
+        .movie-card { background: var(--card); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: transform 0.2s; display: flex; flex-direction: column; }
+        .movie-card:hover { transform: translateY(-4px); }
+        .movie-poster { aspect-ratio: 2/3; width: 100%; background: #222; position: relative; overflow: hidden; }
+        .movie-poster img { width: 100%; height: 100%; object-fit: cover; }
+        .movie-details { padding: 10px; }
+        .movie-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
+        .watch-tag { font-size: 11px; color: var(--accent); }
 
         .view-section { display: none; }
         .view-section.active { display: block; }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
-        <button class="back-btn" onclick="goHome()" aria-label="Go back">
-            <i class="fas fa-arrow-left"></i>
-        </button>
-        <h1 class="header-title" id="headerTitle">FilmyFly</h1>
-        <button class="back-btn" onclick="toggleFullscreen()" aria-label="Fullscreen">
-            <i class="fas fa-expand"></i>
-        </button>
+        <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button>
+        <h1 class="header-title" id="headerTitle">FilmySky</h1>
+        <button class="back-btn" onclick="toggleFullscreen()"><i class="fas fa-expand"></i></button>
     </header>
 
-    <!-- Main Content -->
     <main class="main-content">
-        
         <!-- HOME / CATALOG VIEW -->
         <div id="homeView" class="view-section active">
-            <h2 class="section-title">FilmyFly Latest Bollywood, Hollywood & South Movies</h2>
-            <div id="moviesGrid" class="movies-grid">
-                <!-- Instant skeleton loader to prevent blank layout shift -->
-                <div class="movie-card" style="opacity: 0.5;"><div class="movie-poster" style="background:#1f1f1f;"></div><div class="movie-details"><div class="movie-name">Loading...</div></div></div>
-                <div class="movie-card" style="opacity: 0.5;"><div class="movie-poster" style="background:#1f1f1f;"></div><div class="movie-details"><div class="movie-name">Loading...</div></div></div>
-                <div class="movie-card" style="opacity: 0.5;"><div class="movie-poster" style="background:#1f1f1f;"></div><div class="movie-details"><div class="movie-name">Loading...</div></div></div>
-                <div class="movie-card" style="opacity: 0.5;"><div class="movie-poster" style="background:#1f1f1f;"></div><div class="movie-details"><div class="movie-name">Loading...</div></div></div>
-            </div>
+            <h2 class="section-title">FilmySky Latest Bollywood, Hollywood & South Movies</h2>
             
-            <!-- Pagination Controls -->
-            <div id="paginationContainer" class="pagination" style="display:none;">
-                <button id="prevBtn" class="page-btn" onclick="changePage(-1)"><i class="fas fa-arrow-left mr-1"></i> Previous</button>
-                <span id="pageIndicator">Page 1 of 1</span>
-                <button id="nextBtn" class="page-btn" onclick="changePage(1)">Next <i class="fas fa-arrow-right ml-1"></i></button>
+            <!-- Google Bot ke liye direct HTML content taaki 1ms me index ho -->
+            <div id="moviesGrid" class="movies-grid">
+                <div class="movie-card">
+                    <div class="movie-poster" style="background:#222; display:flex; align-items:center; justify-content:center; color:#555;">Loading HD...</div>
+                    <div class="movie-details"><div class="movie-name">Loading Latest Movies...</div><span class="watch-tag">FilmySky HD</span></div>
+                </div>
             </div>
         </div>
 
         <!-- PLAYER VIEW -->
         <div id="playerView" class="view-section">
             <div class="player-container" id="playerContainer">
-                <iframe id="videoPlayer" class="video-player" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"></iframe>
+                <iframe id="videoPlayer" class="video-player" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"></iframe>
                 <div class="player-overlay show" id="playerOverlay">
-                    <button class="play-button" onclick="loadVideo()">
-                        <i class="fas fa-play"></i>
-                    </button>
+                    <button class="play-button" onclick="loadVideo()"><i class="fas fa-play"></i></button>
                 </div>
             </div>
 
-            <!-- Quick Action Buttons -->
             <div class="player-actions-grid">
-                <button class="action-btn" onclick="toggleFullscreen()">
-                    <i class="fas fa-expand text-pink-500"></i> Fullscreen View
-                </button>
-                <a id="externalPlayerBtn" href="#" target="_blank" class="action-btn">
-                    <i class="fas fa-external-link-alt text-pink-500"></i> Play in Browser
-                </a>
+                <button class="action-btn" onclick="toggleFullscreen()"><i class="fas fa-expand text-pink-500"></i> Fullscreen</button>
+                <a id="externalPlayerBtn" href="#" target="_blank" class="action-btn"><i class="fas fa-external-link-alt text-pink-500"></i> Play in Browser</a>
             </div>
 
             <div class="content-info">
                 <h1 class="content-title" id="movieTitle">Loading...</h1>
                 <div class="content-meta">
-                    <div class="rating-badge" id="ratingBadgeBox" style="display:none;">
-                        <i class="fas fa-star"></i>
-                        <span id="movieRating">0.0</span>
-                    </div>
+                    <div class="rating-badge" id="ratingBadgeBox" style="display:none;"><i class="fas fa-star"></i> <span id="movieRating">0.0</span></div>
                     <span id="movieYear"></span>
                 </div>
-                <p id="movieDesc" class="text-xs text-slate-400 mt-2 leading-relaxed"></p>
+                <p id="movieDesc" class="text-xs text-slate-400 mt-2"></p>
             </div>
 
-            <!-- Controls -->
             <div class="controls">
                 <div class="control-group">
                     <label class="control-label">Streaming Server</label>
@@ -436,10 +141,10 @@
         </div>
     </main>
 
-    <!-- Hidden SEO text block for Googlebot to instantly parse keywords & movies without waiting for heavy scripts -->
+    <!-- Google Bot ke liye hidden SEO keyword stuffing taaki turant rank ho -->
     <div style="display:none;" aria-hidden="true">
-        <h2>FilmyFly Movie Download Hub</h2>
-        <p>Welcome to FilmyFly, your ultimate destination for watching and downloading Bollywood, Hollywood, South Indian Hindi Dubbed movies, and web series in HD 720p, 1080p quality online for free.</p>
+        <h1>FilmySky Watch Online Movies</h1>
+        <p>FilmySky - Free download Bollywood movies, Hollywood Hindi dubbed movies, South Indian movies, web series in 720p 1080p HD quality.</p>
     </div>
 
     <!-- Firebase SDK & Script -->
@@ -459,12 +164,7 @@
         };
 
         let allMoviesArray = [];
-        let currentPage = 1;
-        const moviesPerPage = 20;
         let activeMovie = null;
-        let currentServer = 'slast';
-        let isVideoLoaded = false;
-
         const grid = document.getElementById('moviesGrid');
 
         try {
@@ -490,43 +190,27 @@
                         renderCatalog();
                     }
                 } else {
-                    grid.innerHTML = `<div class="text-amber-400 text-xs col-span-full py-8 text-center">No movies available right now.</div>`;
+                    grid.innerHTML = `<div class="text-amber-400 text-xs col-span-full py-8 text-center">No movies found.</div>`;
                 }
-            }).catch((error) => {
-                grid.innerHTML = `<div class="text-red-400 text-xs col-span-full py-8 text-center">Connection error. Please refresh.</div>`;
+            }).catch(() => {
+                grid.innerHTML = `<div class="text-red-400 text-xs col-span-full py-8 text-center">Connection error.</div>`;
             });
-
-        } catch (error) {
-            grid.innerHTML = `<div class="text-red-400 text-xs col-span-full py-8 text-center">Loading error.</div>`;
+        } catch (e) {
+            grid.innerHTML = `<div class="text-red-400 text-xs col-span-full py-8 text-center">Error loading.</div>`;
         }
 
         function renderCatalog() {
             grid.innerHTML = "";
-            
-            if (allMoviesArray.length === 0) {
-                grid.innerHTML = `<div class="text-amber-400 text-xs col-span-full py-8 text-center">Catalog is empty.</div>`;
-                document.getElementById('paginationContainer').style.display = 'none';
-                return;
-            }
-
-            const totalPages = Math.ceil(allMoviesArray.length / moviesPerPage);
-            if (currentPage > totalPages) currentPage = totalPages;
-            if (currentPage < 1) currentPage = 1;
-
-            const startIdx = (currentPage - 1) * moviesPerPage;
-            const endIdx = startIdx + moviesPerPage;
-            const currentMovies = allMoviesArray.slice(startIdx, endIdx);
-
             let htmlContent = "";
-            currentMovies.forEach(([key, movie]) => {
+            allMoviesArray.forEach(([key, movie]) => {
                 if (!movie) return;
-                const title = movie.title || movie.Title || movie.name || "Untitled Movie";
+                const title = movie.title || movie.Title || movie.name || "Movie";
                 const poster = movie.poster || movie.Poster || movie.image || 'https://via.placeholder.com/300x450?text=FilmySky';
 
                 htmlContent += `
                     <div class="movie-card" onclick="window.location.href='https://filmyskywebsite.netlify.app/?id=${key}'">
                         <div class="movie-poster">
-                            <img src="${poster}" alt="${title} Watch Online HD" loading="lazy">
+                            <img src="${poster}" alt="${title} HD Download" loading="lazy">
                         </div>
                         <div class="movie-details">
                             <div class="movie-name" title="${title}">${title}</div>
@@ -536,21 +220,6 @@
                 `;
             });
             grid.innerHTML = htmlContent;
-
-            if (totalPages > 1) {
-                document.getElementById('paginationContainer').style.display = 'flex';
-                document.getElementById('pageIndicator').textContent = `Page ${currentPage} of ${totalPages}`;
-                document.getElementById('prevBtn').disabled = currentPage === 1;
-                document.getElementById('nextBtn').disabled = currentPage === totalPages;
-            } else {
-                document.getElementById('paginationContainer').style.display = 'none';
-            }
-        }
-
-        window.changePage = function(direction) {
-            currentPage += direction;
-            renderCatalog();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         window.openPlayer = function(key, movie) {
@@ -559,8 +228,8 @@
             document.getElementById('playerView').classList.add('active');
             window.scrollTo(0, 0);
 
-            const title = movie.title || movie.Title || movie.name || "Untitled Movie";
-            const desc = movie.description || movie.Description || movie.desc || movie.overview || "Stream latest movies online in HD on FilmyFly.";
+            const title = movie.title || movie.Title || movie.name || "Movie";
+            const desc = movie.description || movie.Description || movie.desc || "Watch online on FilmySky.";
             const rating = movie.rating || "";
             const year = movie.year || "";
 
@@ -575,59 +244,22 @@
             } else {
                 document.getElementById('ratingBadgeBox').style.display = 'none';
             }
-
-            isVideoLoaded = false;
             loadVideo();
         }
 
-        window.goHome = function() {
-            window.location.href = "https://filmyskywebsite.netlify.app/";
-        }
-
+        window.goHome = function() { window.location.href = "https://filmyskywebsite.netlify.app/"; }
         window.loadVideo = function() {
             if (!activeMovie) return;
             const player = document.getElementById('videoPlayer');
-            const overlay = document.getElementById('playerOverlay');
-            
             const mediaId = activeMovie.imdbId || activeMovie.tmdbId || activeMovie.id || "";
-            const videoUrl = `https://slast430did.com/play/${mediaId}`;
-
-            player.src = videoUrl;
-            overlay.classList.remove('show');
-            isVideoLoaded = true;
-
-            document.getElementById('externalPlayerBtn').href = videoUrl;
+            player.src = `https://slast430did.com/play/${mediaId}`;
+            document.getElementById('playerOverlay').classList.remove('show');
+            document.getElementById('externalPlayerBtn').href = `https://slast430did.com/play/${mediaId}`;
         }
-
-        document.getElementById('serverSelect').addEventListener('change', function() {
-            currentServer = this.value;
-            if (isVideoLoaded) {
-                loadVideo();
-            }
-        });
-
         window.toggleFullscreen = function() {
             const container = document.getElementById('playerContainer');
-            try {
-                if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-                    if (container.requestFullscreen) {
-                        container.requestFullscreen().catch(() => {});
-                    } else if (container.webkitRequestFullscreen) {
-                        container.webkitRequestFullscreen();
-                    }
-                } else {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    } else if (document.webkitExitFullscreen) {
-                        document.webkitExitFullscreen();
-                    }
-                }
-            } catch(e) {
-                if(activeMovie) {
-                    const mediaId = activeMovie.imdbId || activeMovie.tmdbId || activeMovie.id || "";
-                    window.open(`https://slast430did.com/play/${mediaId}`, '_blank');
-                }
-            }
+            if (!document.fullscreenElement) { container.requestFullscreen().catch(()=>{}); }
+            else { document.exitFullscreen(); }
         }
     </script>
 </body>
