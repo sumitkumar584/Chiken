@@ -5,18 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FilmyFly - Watch & Download Latest Bollywood, Hollywood & South Hindi Dubbed Movies HD</title>
     
-    <!-- Advanced SEO Meta Tags for #1 Ranking -->
-    <meta name="description" content="FilmyFly - Watch and download latest Bollywood, Hollywood, South Indian Hindi dubbed movies, and web series online in HD quality for free without waiting.">
-    <meta name="keywords" content="FilmyFly, Filmysky, watch movies online, HD movies download, south indian hindi dubbed movies, bollywood movies, hollywood movies, web series">
+    <meta name="description" content="FilmyFly - Watch and download latest Bollywood, Hollywood, South Indian Hindi dubbed movies, and web series online in HD quality for free.">
+    <meta name="keywords" content="FilmyFly, Filmysky, watch movies online, HD movies download, south indian hindi dubbed movies, bollywood movies, hollywood movies">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <link rel="canonical" href="https://filmyskywebsite.netlify.app/">
 
-    <!-- Open Graph SEO -->
     <meta property="og:title" content="FilmyFly - Watch Movies Online in HD">
     <meta property="og:description" content="Stream latest Bollywood, Hollywood & South Indian movies instantly in HD on FilmyFly.">
     <meta property="og:type" content="website">
 
-    <!-- Schema.org Structured Data for Google #1 Ranking -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -28,14 +25,7 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
     <style>
-        :root {
-            --bg: #0f0f0f;
-            --card: #1a1a1a;
-            --ink: #ffffff;
-            --muted: #aaaaaa;
-            --accent: #ff2d95;
-        }
-
+        :root { --bg: #0f0f0f; --card: #1a1a1a; --ink: #ffffff; --muted: #aaaaaa; --accent: #ff2d95; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
 
@@ -98,11 +88,11 @@
         <div id="homeView" class="view-section active">
             <h2 class="section-title">FilmyFly Latest Bollywood, Hollywood & South Movies</h2>
             
-            <!-- Google Bot ke liye direct HTML content taaki 1ms me index ho -->
+            <!-- Clean placeholder grid -->
             <div id="moviesGrid" class="movies-grid">
                 <div class="movie-card">
-                    <div class="movie-poster" style="background:#222; display:flex; align-items:center; justify-content:center; color:#555;">Loading HD...</div>
-                    <div class="movie-details"><div class="movie-name">Loading Latest Movies...</div><span class="watch-tag">FilmyFly HD</span></div>
+                    <div class="movie-poster" style="background:#1a1a1a;"></div>
+                    <div class="movie-details"><div class="movie-name" style="color:#666;">Loading Movies...</div><span class="watch-tag">FilmyFly HD</span></div>
                 </div>
             </div>
         </div>
@@ -141,7 +131,7 @@
         </div>
     </main>
 
-    <!-- Google Bot ke liye hidden SEO keyword stuffing taaki turant rank ho -->
+    <!-- SEO text block for Google Bot -->
     <div style="display:none;" aria-hidden="true">
         <h1>FilmyFly Watch Online Movies</h1>
         <p>FilmyFly - Free download Bollywood movies, Hollywood Hindi dubbed movies, South Indian movies, web series in 720p 1080p HD quality.</p>
@@ -177,7 +167,7 @@
                     allMoviesArray = Object.entries(rawData);
                     allMoviesArray.sort((a, b) => {
                         let dateA = new Date(a[1].createdAt || a[1].updatedAt || a[1].year || 0);
-                        let dateB = new Date(b[1].createdAt || b[1].updatedAt || b[1].year || 0);
+                        let dateB = new Date(b[1].createdAt || b[12].updatedAt || b[1].year || 0);
                         return dateB - dateA;
                     });
                     
@@ -202,6 +192,7 @@
         function renderCatalog() {
             grid.innerHTML = "";
             let htmlContent = "";
+            allMoviesArray.keys(); // safe
             allMoviesArray.forEach(([key, movie]) => {
                 if (!movie) return;
                 const title = movie.title || movie.Title || movie.name || "Movie";
