@@ -3,18 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FilmyFly - Watch Bollywood, Hollywood & South Hindi Dubbed Movies Online</title>
+    <title>FilmyFly - Watch & Download Latest Bollywood, Hollywood & South Hindi Dubbed Movies HD</title>
     
     <!-- Advanced SEO Meta Tags for #1 Ranking -->
-    <meta name="description" content="FilmyFly - Watch and download latest Bollywood, Hollywood, South Indian Hindi dubbed movies, and web series online in HD quality for free.">
-    <meta name="keywords" content="FilmyFly, Filmysky, watch movies online, HD movies download, south indian hindi dubbed movies, bollywood movies, hollywood movies, web series">
-    <meta name="author" content="Filmyfly">
-    <meta name="robots" content="index, follow">
-    
+    <meta name="description" content="FilmyFly - Watch and download latest Bollywood, Hollywood, South Indian Hindi dubbed movies, and web series online in HD quality for free without waiting.">
+    <meta name="keywords" content="FilmyFly, FilmyFly, watch movies online, HD movies download, south indian hindi dubbed movies, bollywood movies, hollywood movies, web series, 1080p movies">
+    <meta name="author" content="FilmyFly">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://filmyskywebsite.netlify.app/">
+
     <!-- Open Graph / Social Media SEO -->
-    <meta property="og:title" content="FilmyFly - Watch Movies Online">
-    <meta property="og:description" content="Stream latest Bollywood, Hollywood & South Indian movies in HD on FilmyFly.">
+    <meta property="og:site_name" content="FilmyFly">
+    <meta property="og:title" content="FilmyFly - Watch Movies Online in HD">
+    <meta property="og:description" content="Stream latest Bollywood, Hollywood & South Indian movies instantly in HD on FilmyFly.">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://filmyskywebsite.netlify.app/">
+
+    <!-- Schema.org Structured Data for Google #1 Ranking -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "FilmyFly",
+      "url": "https://filmyskywebsite.netlify.app/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://filmyskywebsite.netlify.app/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
     <style>
@@ -356,9 +374,13 @@
         
         <!-- HOME / CATALOG VIEW -->
         <div id="homeView" class="view-section active">
-            <h2 class="section-title">FilmyFly Latest Movies</h2>
+            <h2 class="section-title">FilmyFly Latest Bollywood, Hollywood & South Movies</h2>
             <div id="moviesGrid" class="movies-grid">
-                <div class="text-slate-400 text-sm col-span-full py-8 text-center">Loading movies from Firebase...</div>
+                <!-- Instant skeleton loader to prevent blank layout shift -->
+                <div class="movie-card" style="opacity: 0.5;"><div class="movie-poster" style="background:#1f1f1f;"></div><div class="movie-details"><div class="movie-name">Loading...</div></div></div>
+                <div class="movie-card" style="opacity: 0.5;"><div class="movie-poster" style="background:#1f1f1f;"></div><div class="movie-details"><div class="movie-name">Loading...</div></div></div>
+                <div class="movie-card" style="opacity: 0.5;"><div class="movie-poster" style="background:#1f1f1f;"></div><div class="movie-details"><div class="movie-name">Loading...</div></div></div>
+                <div class="movie-card" style="opacity: 0.5;"><div class="movie-poster" style="background:#1f1f1f;"></div><div class="movie-details"><div class="movie-name">Loading...</div></div></div>
             </div>
             
             <!-- Pagination Controls -->
@@ -414,6 +436,12 @@
         </div>
     </main>
 
+    <!-- Hidden SEO text block for Googlebot to instantly parse keywords & movies without waiting for heavy scripts -->
+    <div style="display:none;" aria-hidden="true">
+        <h2>FilmyFly Movie Download Hub</h2>
+        <p>Welcome to FilmyFly, your ultimate destination for watching and downloading Bollywood, Hollywood, South Indian Hindi Dubbed movies, and web series in HD 720p, 1080p quality online for free.</p>
+    </div>
+
     <!-- Firebase SDK & Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -432,7 +460,7 @@
 
         let allMoviesArray = [];
         let currentPage = 1;
-        const moviesPerPage = 20; // Ek baar me 20 movies load hongi
+        const moviesPerPage = 20;
         let activeMovie = null;
         let currentServer = 'slast';
         let isVideoLoaded = false;
@@ -446,9 +474,7 @@
             get(child(dbRef, "filmysky/content")).then((snapshot) => {
                 if (snapshot.exists()) {
                     const rawData = snapshot.val();
-                    
                     allMoviesArray = Object.entries(rawData);
-                    // Latest movies ko pehle show karne ke liye sort kiya
                     allMoviesArray.sort((a, b) => {
                         let dateA = new Date(a[1].createdAt || a[1].updatedAt || a[1].year || 0);
                         let dateB = new Date(b[1].createdAt || b[1].updatedAt || b[1].year || 0);
@@ -464,14 +490,14 @@
                         renderCatalog();
                     }
                 } else {
-                    grid.innerHTML = `<div class="text-amber-400 text-xs col-span-full py-8 text-center">No movies found inside 'content'.</div>`;
+                    grid.innerHTML = `<div class="text-amber-400 text-xs col-span-full py-8 text-center">No movies available right now.</div>`;
                 }
             }).catch((error) => {
-                grid.innerHTML = `<div class="text-red-400 text-xs col-span-full py-8 text-center">Error: ${error.message}</div>`;
+                grid.innerHTML = `<div class="text-red-400 text-xs col-span-full py-8 text-center">Connection error. Please refresh.</div>`;
             });
 
         } catch (error) {
-            grid.innerHTML = `<div class="text-red-400 text-xs col-span-full py-8 text-center">Init Error: ${error.message}</div>`;
+            grid.innerHTML = `<div class="text-red-400 text-xs col-span-full py-8 text-center">Loading error.</div>`;
         }
 
         function renderCatalog() {
@@ -491,32 +517,26 @@
             const endIdx = startIdx + moviesPerPage;
             const currentMovies = allMoviesArray.slice(startIdx, endIdx);
 
+            let htmlContent = "";
             currentMovies.forEach(([key, movie]) => {
                 if (!movie) return;
-                
                 const title = movie.title || movie.Title || movie.name || "Untitled Movie";
-                const poster = movie.poster || movie.Poster || movie.image || 'https://via.placeholder.com/300x450?text=No+Poster';
+                const poster = movie.poster || movie.Poster || movie.image || 'https://via.placeholder.com/300x450?text=FilmySky';
 
-                const card = document.createElement('div');
-                card.className = "movie-card";
-                card.innerHTML = `
-                    <div class="movie-poster">
-                        <img src="${poster}" alt="${title}" loading="lazy">
-                    </div>
-                    <div class="movie-details">
-                        <div class="movie-name" title="${title}">${title}</div>
-                        <span class="watch-tag"><i class="fas fa-play-circle mr-1"></i> Watch Online</span>
+                htmlContent += `
+                    <div class="movie-card" onclick="window.location.href='https://filmyskywebsite.netlify.app/?id=${key}'">
+                        <div class="movie-poster">
+                            <img src="${poster}" alt="${title} Watch Online HD" loading="lazy">
+                        </div>
+                        <div class="movie-details">
+                            <div class="movie-name" title="${title}">${title}</div>
+                            <span class="watch-tag"><i class="fas fa-play-circle mr-1"></i> Watch HD</span>
+                        </div>
                     </div>
                 `;
-                
-                card.onclick = () => {
-                    window.location.href = `https://filmyskywebsite.netlify.app/?id=${key}`;
-                };
-                
-                grid.appendChild(card);
             });
+            grid.innerHTML = htmlContent;
 
-            // Pagination UI update
             if (totalPages > 1) {
                 document.getElementById('paginationContainer').style.display = 'flex';
                 document.getElementById('pageIndicator').textContent = `Page ${currentPage} of ${totalPages}`;
@@ -540,7 +560,7 @@
             window.scrollTo(0, 0);
 
             const title = movie.title || movie.Title || movie.name || "Untitled Movie";
-            const desc = movie.description || movie.Description || movie.desc || movie.overview || "No description available.";
+            const desc = movie.description || movie.Description || movie.desc || movie.overview || "Stream latest movies online in HD on FilmyFly.";
             const rating = movie.rating || "";
             const year = movie.year || "";
 
