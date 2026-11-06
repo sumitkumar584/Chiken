@@ -1,19 +1,27 @@
 # Playroom — virtual-coins game demo
 
-This repository now contains a small Aviator and Teen Patti practice-game interface. The old movie catalog and admin page content have been replaced.
+This repository includes an original Aviator and Teen Patti practice arcade with a simulated Netlify Function API. The layout uses common game-lobby conventions and is not affiliated with or a copy of any third-party casino brand.
 
-## Run the API locally
+## Run locally
 
-The API is a Netlify Function in `netlify/functions/game.js`. Install the Netlify CLI, then run:
+Install the Netlify CLI and run:
 
 ```sh
 npx netlify dev
 ```
 
-Open the local URL printed by Netlify. The browser calls `/.netlify/functions/game?game=aviator` or `?game=teenpatti`. Health check: `/.netlify/functions/game?game=health`.
+Open the local URL printed by Netlify. Demo endpoints:
 
-Deploy the repository to Netlify to make the API endpoint available online. This is a self-contained **simulated demo API**, not a third-party casino feed. Outcomes are random demo results; the wallet is stored in the user's browser and is not server-backed.
+- `/.netlify/functions/game?game=health`
+- `/.netlify/functions/game?game=aviator`
+- `/.netlify/functions/game?game=teenpatti`
 
-## Important
+The API creates simulated round outcomes. It does not connect to a real casino or external game provider. The demo admin is at `/admin.html`; its configurable lobby message and stake limits are stored in the browser's local storage and are not server-wide or authentication-protected.
 
-Virtual coins only. There are no deposits, withdrawals, cash prizes, or real-money bets. This demo is not a certified gambling product and must not be presented as a live casino or real-money API. Any regulated real-money service would require a properly licensed provider, compliant backend, and applicable legal approvals.
+## Deployment
+
+Deploy the branch to Netlify; `netlify.toml` configures the function directory. The API becomes available on that Netlify deployment. This GitHub change does not itself publish the site.
+
+## Safety and scope
+
+Virtual coins only: no deposits, withdrawals, cash prizes, real-money bets, real user accounts, or live casino API. Do not enter credentials or sensitive data into the demo admin. Any regulated gambling product requires properly licensed providers, secure server-side systems, and applicable legal approvals.
