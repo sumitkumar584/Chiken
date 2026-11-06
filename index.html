@@ -1,257 +1,355 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FilmyFly - Watch & Download Latest Bollywood, Hollywood & South Hindi Dubbed Movies HD</title>
-    
-    <meta name="description" content="FilmyFly - Watch and download latest Bollywood, Hollywood, South Indian Hindi dubbed movies, and web series online in HD quality for free.">
-    <meta name="keywords" content="FilmyFly, Filmysky, watch movies online, HD movies download, south indian hindi dubbed movies, bollywood movies, hollywood movies">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <link rel="canonical" href="https://filmyskywebsite.netlify.app/">
-
-    <meta property="og:title" content="FilmyFly - Watch Movies Online in HD">
-    <meta property="og:description" content="Stream latest Bollywood, Hollywood & South Indian movies instantly in HD on FilmyFly.">
-    <meta property="og:type" content="website">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "FilmyFly",
-      "url": "https://filmyskywebsite.netlify.app/"
-    }
-    </script>
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
-    <style>
-        :root { --bg: #0f0f0f; --card: #1a1a1a; --ink: #ffffff; --muted: #aaaaaa; --accent: #ff2d95; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
-
-        .header {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(20px);
-            padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;
-            border-bottom: 1px solid #222;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FunInHorse | Premium Gaming Lobby</title>
+  <meta name="description" content="Premium gaming and betting experience inspired by modern casino lobbies." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#f59e0b',
+            page: '#090d18',
+            panel: '#111827',
+            soft: '#1f2937',
+            accent: '#22c55e',
+            danger: '#ef4444'
+          },
+          boxShadow: {
+            glow: '0 0 30px rgba(245, 158, 11, 0.22)'
+          }
         }
-        .back-btn { width: 40px; height: 40px; background: var(--card); border: none; color: white; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-        .header-title { font-size: 20px; font-weight: 700; color: white; }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d18;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --muted: #94a3b8;
+      --line: rgba(148, 163, 184, 0.18);
+      --brand: #f59e0b;
+      --brand-soft: rgba(245, 158, 11, 0.16);
+      --green: #22c55e;
+      --red: #ef4444;
+      --cyan: #38bdf8;
+    }
 
-        .main-content { padding: 90px 16px 40px; max-width: 1200px; margin: 0 auto; }
-        
-        .player-container { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 12px; }
-        .video-player { width: 100%; height: 100%; border: none; background: #000; }
-        .player-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-        .player-overlay.show { opacity: 1; pointer-events: all; }
-        .play-button { width: 80px; height: 80px; background: rgba(255, 45, 149, 0.9); border: none; border-radius: 50%; color: white; font-size: 24px; cursor: pointer; }
+    * { box-sizing: border-box; }
 
-        .player-actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .action-btn { background: var(--card); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 8px; text-align: center; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+    html { scroll-behavior: smooth; }
 
-        .content-info { margin-bottom: 20px; }
-        .content-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
-        .content-meta { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 14px; }
-        .rating-badge { display: flex; align-items: center; gap: 4px; background: rgba(255, 215, 0, 0.15); color: #ffd700; padding: 4px 8px; border-radius: 8px; font-size: 13px; font-weight: 600; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(245, 158, 11, 0.18), transparent 24%),
+        linear-gradient(180deg, #070b13 0%, #090d18 55%, #050a12 100%);
+      color: #f8fafc;
+    }
 
-        .controls { background: var(--card); border-radius: 12px; padding: 16px; margin-bottom: 30px; }
-        .control-label { font-size: 14px; font-weight: 600; margin-bottom: 8px; display: block; color: var(--muted); }
-        .server-select { width: 100%; background: var(--bg); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 12px 16px; color: var(--ink); font-size: 14px; outline: none; }
+    .glass {
+      background: rgba(17, 24, 39, 0.88);
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+      backdrop-filter: blur(12px);
+    }
 
-        .section-title { font-size: 20px; font-weight: 700; margin-bottom: 16px; border-left: 4px solid var(--accent); padding-left: 10px; }
-        .movies-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-        @media(min-width: 640px) { .movies-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-        @media(min-width: 768px) { .movies-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-        @media(min-width: 1024px) { .movies-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.28rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      background: rgba(148, 163, 184, 0.06);
+      color: #e2e8f0;
+    }
 
-        .movie-card { background: var(--card); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: transform 0.2s; display: flex; flex-direction: column; }
-        .movie-card:hover { transform: translateY(-4px); }
-        .movie-poster { aspect-ratio: 2/3; width: 100%; background: #222; position: relative; overflow: hidden; }
-        .movie-poster img { width: 100%; height: 100%; object-fit: cover; }
-        .movie-details { padding: 10px; }
-        .movie-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
-        .watch-tag { font-size: 11px; color: var(--accent); }
+    .game-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      transition: transform 0.24s ease, border-color 0.24s ease;
+    }
 
-        .view-section { display: none; }
-        .view-section.active { display: block; }
-    </style>
+    .game-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(245, 158, 11, 0.5);
+    }
+
+    .game-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(3,7,18,0.2), rgba(3,7,18,0.75));
+      z-index: 0;
+    }
+
+    .game-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 0.9fr;
+      gap: 1.1rem;
+    }
+
+    @media (max-width: 980px) {
+      .top-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header class="header">
-        <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button>
-        <h1 class="header-title" id="headerTitle">FilmyFly</h1>
-        <button class="back-btn" onclick="toggleFullscreen()"><i class="fas fa-expand"></i></button>
+  <div class="min-h-screen">
+    <header class="sticky top-0 z-40 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/15 text-lg font-black text-orange-400 shadow-glow">F</div>
+          <div>
+            <div class="text-xl font-black tracking-wider text-white">FUNINHORSE</div>
+            <div class="text-[10px] uppercase tracking-[0.28em] text-slate-400">Live gaming</div>
+          </div>
+        </div>
+
+        <nav class="hidden items-center gap-8 text-sm font-medium text-slate-300 md:flex">
+          <a href="#home" class="text-white">Home</a>
+          <a href="#games">Games</a>
+          <a href="#sports">Sports</a>
+          <a href="#rewards">Rewards</a>
+          <a href="#about">About</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <button class="hidden rounded-full border border-slate-700 bg-slate-900/80 px-4 py-2 text-sm font-semibold text-slate-200 md:block">Login</button>
+          <button class="rounded-full bg-orange-500 px-4 py-2 text-sm font-bold text-slate-950 shadow-glow transition hover:bg-orange-400">Register</button>
+        </div>
+      </div>
     </header>
 
-    <main class="main-content">
-        <!-- HOME / CATALOG VIEW -->
-        <div id="homeView" class="view-section active">
-            <h2 class="section-title">FilmyFly Latest Bollywood, Hollywood & South Movies</h2>
-            
-            <!-- Clean placeholder grid -->
-            <div id="moviesGrid" class="movies-grid">
-                <div class="movie-card">
-                    <div class="movie-poster" style="background:#1a1a1a;"></div>
-                    <div class="movie-details"><div class="movie-name" style="color:#666;">Loading Movies...</div><span class="watch-tag">FilmyFly HD</span></div>
-                </div>
+    <main id="home" class="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
+      <section class="top-grid">
+        <div class="glass overflow-hidden rounded-[28px] p-6 sm:p-8">
+          <div class="mb-5 flex items-center justify-between gap-3">
+            <span class="chip bg-orange-500/10 text-orange-300 border-orange-500/20">Premium lobby</span>
+            <span class="chip text-emerald-300 border-emerald-500/20 bg-emerald-500/10">Live now</span>
+          </div>
+
+          <div class="max-w-xl">
+            <div class="mb-3 text-sm font-semibold uppercase tracking-[0.28em] text-orange-300">Smart play, better odds</div>
+            <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl">Win faster with a premium gaming experience.</h1>
+            <p class="mt-4 max-w-lg text-base text-slate-300">
+              Explore premium crash games, live sports markets, cards, roulette and instant rewards through a clean, mobile-first platform built for smart players.
+            </p>
+          </div>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <button class="rounded-full bg-orange-500 px-5 py-3 text-sm font-bold text-slate-950 shadow-glow transition hover:bg-orange-400">Play now</button>
+            <button class="rounded-full border border-slate-700 bg-slate-900/80 px-5 py-3 text-sm font-bold text-slate-100">View games</button>
+          </div>
+
+          <div class="mt-8 grid gap-4 sm:grid-cols-3">
+            <div class="rounded-2xl border border-slate-700 bg-slate-900/60 p-4">
+              <div class="text-xs uppercase tracking-[0.2em] text-slate-400">Live players</div>
+              <div id="livePlayers" class="mt-2 text-2xl font-black">12.4K</div>
             </div>
+            <div class="rounded-2xl border border-slate-700 bg-slate-900/60 p-4">
+              <div class="text-xs uppercase tracking-[0.2em] text-slate-400">Total wagers</div>
+              <div id="totalWagers" class="mt-2 text-2xl font-black">₹8.4Cr</div>
+            </div>
+            <div class="rounded-2xl border border-slate-700 bg-slate-900/60 p-4">
+              <div class="text-xs uppercase tracking-[0.2em] text-slate-400">Avg payout</div>
+              <div id="avgPayout" class="mt-2 text-2xl font-black">96.8%</div>
+            </div>
+          </div>
         </div>
 
-        <!-- PLAYER VIEW -->
-        <div id="playerView" class="view-section">
-            <div class="player-container" id="playerContainer">
-                <iframe id="videoPlayer" class="video-player" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"></iframe>
-                <div class="player-overlay show" id="playerOverlay">
-                    <button class="play-button" onclick="loadVideo()"><i class="fas fa-play"></i></button>
-                </div>
+        <div class="glass rounded-[28px] p-5 sm:p-6">
+          <div class="mb-4 flex items-center justify-between">
+            <div>
+              <div class="text-xs uppercase tracking-[0.22em] text-slate-400">Live leaderboard</div>
+              <div class="mt-1 text-xl font-black">Top winners</div>
             </div>
+            <span class="chip bg-emerald-500/10 text-emerald-300 border-emerald-500/25">Sync</span>
+          </div>
 
-            <div class="player-actions-grid">
-                <button class="action-btn" onclick="toggleFullscreen()"><i class="fas fa-expand text-pink-500"></i> Fullscreen</button>
-                <a id="externalPlayerBtn" href="#" target="_blank" class="action-btn"><i class="fas fa-external-link-alt text-pink-500"></i> Play in Browser</a>
-            </div>
-
-            <div class="content-info">
-                <h1 class="content-title" id="movieTitle">Loading...</h1>
-                <div class="content-meta">
-                    <div class="rating-badge" id="ratingBadgeBox" style="display:none;"><i class="fas fa-star"></i> <span id="movieRating">0.0</span></div>
-                    <span id="movieYear"></span>
-                </div>
-                <p id="movieDesc" class="text-xs text-slate-400 mt-2"></p>
-            </div>
-
-            <div class="controls">
-                <div class="control-group">
-                    <label class="control-label">Streaming Server</label>
-                    <select class="server-select" id="serverSelect">
-                        <option value="slast">Slast Server (Primary)</option>
-                    </select>
-                </div>
-            </div>
+          <div id="winnerList" class="space-y-3"></div>
         </div>
+      </section>
+
+      <section id="games" class="mt-10">
+        <div class="mb-5 flex items-center justify-between gap-3">
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-[0.28em] text-orange-300">All games</div>
+            <h2 class="mt-2 text-3xl font-black text-white">Popular gaming rooms</h2>
+          </div>
+          <a href="admin.html" class="rounded-full border border-orange-500/40 bg-orange-500/10 px-4 py-2 text-sm font-bold text-orange-200">Admin panel</a>
+        </div>
+
+        <div id="gamesGrid" class="grid gap-5 md:grid-cols-2 xl:grid-cols-4"></div>
+      </section>
+
+      <section id="sports" class="mt-12">
+        <div class="mb-5 flex items-center justify-between gap-3">
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-[0.28em] text-orange-300">Sports</div>
+            <h2 class="mt-2 text-3xl font-black text-white">Live betting board</h2>
+          </div>
+          <button class="rounded-full border border-slate-700 bg-slate-900/80 px-4 py-2 text-sm font-bold text-slate-100">See all</button>
+        </div>
+
+        <div id="matchesBoard" class="grid gap-4 lg:grid-cols-3"></div>
+      </section>
+
+      <section id="rewards" class="mt-12 grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
+        <div class="glass rounded-[28px] p-6">
+          <div class="mb-4 flex items-center justify-between">
+            <div>
+              <div class="text-xs font-semibold uppercase tracking-[0.28em] text-orange-300">Rewards</div>
+              <h3 class="mt-2 text-2xl font-black text-white">VIP club benefits</h3>
+            </div>
+            <span class="chip bg-orange-500/10 text-orange-200 border-orange-500/20">Gold tier</span>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-3">
+            <div class="rounded-2xl border border-slate-700 bg-slate-900/60 p-4">
+              <div class="text-sm text-slate-400">Cashback</div>
+              <div class="mt-2 text-3xl font-black text-white">12%</div>
+            </div>
+            <div class="rounded-2xl border border-slate-700 bg-slate-900/60 p-4">
+              <div class="text-sm text-slate-400">Daily boost</div>
+              <div class="mt-2 text-3xl font-black text-white">1.7x</div>
+            </div>
+            <div class="rounded-2xl border border-slate-700 bg-slate-900/60 p-4">
+              <div class="text-sm text-slate-400">Prize pool</div>
+              <div class="mt-2 text-3xl font-black text-white">₹4.9L</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass rounded-[28px] p-6" id="about">
+          <div class="text-xs font-semibold uppercase tracking-[0.28em] text-orange-300">API status</div>
+          <h3 class="mt-2 text-2xl font-black text-white">Connected services</h3>
+          <div id="apiStatus" class="mt-5 space-y-4"></div>
+        </div>
+      </section>
     </main>
+  </div>
 
-    <!-- SEO text block for Google Bot -->
-    <div style="display:none;" aria-hidden="true">
-        <h1>FilmyFly Watch Online Movies</h1>
-        <p>FilmyFly - Free download Bollywood movies, Hollywood Hindi dubbed movies, South Indian movies, web series in 720p 1080p HD quality.</p>
-    </div>
+  <script src="app.js"></script>
+  <script>
+    const winnerList = document.getElementById('winnerList');
+    const gamesGrid = document.getElementById('gamesGrid');
+    const matchesBoard = document.getElementById('matchesBoard');
+    const apiStatus = document.getElementById('apiStatus');
 
-    <!-- Firebase SDK & Script -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    function renderWinnerList(winners) {
+      winnerList.innerHTML = winners.map((winner, index) => `
+        <div class="flex items-center justify-between rounded-2xl border border-slate-800 bg-slate-900/70 p-3">
+          <div class="flex items-center gap-3">
+            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-orange-500/20 text-xs font-bold text-orange-300">#${index + 1}</div>
+            <div>
+              <div class="font-bold text-white">${winner.name}</div>
+              <div class="text-xs text-slate-400">${winner.game}</div>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="font-black text-emerald-300">${winner.amount}</div>
+            <div class="text-[10px] uppercase tracking-[0.2em] text-slate-500">Won</div>
+          </div>
+        </div>
+      `).join('');
+    }
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCJRUp-c9_zeqT6RTjrqf81MOZyI53QZqI",
-            authDomain: "filmysky-3454b.firebaseapp.com",
-            databaseURL: "https://filmysky-3454b-default-rtdb.firebaseio.com",
-            projectId: "Filmysky-3454b",
-            storageBucket: "filmysky-3454b.firebasestorage.app",
-            messagingSenderId: "146408648284",
-            appId: "1:146408648284:web:b8cb1891a533a24119c099",
-            measurementId: "G-GT8CLQYYL4"
-        };
+    function renderGames(games) {
+      gamesGrid.innerHTML = games.map(game => `
+        <article class="game-card relative min-h-[280px] overflow-hidden rounded-[26px] bg-slate-900" style="background-image:url('${game.image}'); background-size:cover; background-position:center;">
+          <div class="flex h-full flex-col justify-between p-5">
+            <div class="flex items-start justify-between gap-3">
+              <span class="chip bg-orange-500/10 text-orange-200 border-orange-500/25">${game.badge}</span>
+              <span class="chip bg-slate-950/70 text-slate-200 border-slate-700">${game.type}</span>
+            </div>
 
-        let allMoviesArray = [];
-        let activeMovie = null;
-        const grid = document.getElementById('moviesGrid');
+            <div>
+              <div class="text-2xl font-black text-white">${game.name}</div>
+              <div class="mt-2 flex items-center justify-between text-sm text-slate-200">
+                <span>Payout</span>
+                <span class="font-bold text-amber-300">${game.rate}</span>
+              </div>
+              <div class="mt-3 flex items-center justify-between">
+                <div class="text-xs uppercase tracking-[0.2em] text-slate-300">${game.players} players</div>
+                <button class="rounded-full bg-orange-500 px-3 py-2 text-xs font-bold text-slate-950">Enter</button>
+              </div>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
 
-        try {
-            const app = initializeApp(firebaseConfig);
-            const dbRef = ref(getDatabase(app));
-            
-            get(child(dbRef, "filmysky/content")).then((snapshot) => {
-                if (snapshot.exists()) {
-                    const rawData = snapshot.val();
-                    allMoviesArray = Object.entries(rawData);
-                    allMoviesArray.sort((a, b) => {
-                        let dateA = new Date(a[1].createdAt || a[1].updatedAt || a[1].year || 0);
-                        let dateB = new Date(b[1].createdAt || b[12].updatedAt || b[1].year || 0);
-                        return dateB - dateA;
-                    });
-                    
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const movieId = urlParams.get('id');
+    function renderMatches(matches) {
+      matchesBoard.innerHTML = matches.map(match => `
+        <div class="glass rounded-[24px] p-4">
+          <div class="flex items-center justify-between">
+            <span class="chip ${match.status === 'Live' ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20' : match.status === 'In play' ? 'bg-cyan-500/10 text-cyan-300 border-cyan-500/20' : 'bg-slate-700/80 text-slate-200 border-slate-600'}">${match.status}</span>
+            <span class="text-xs uppercase tracking-[0.2em] text-slate-500">${match.market}</span>
+          </div>
 
-                    if (movieId && rawData[movieId]) {
-                        openPlayer(movieId, rawData[movieId]);
-                    } else {
-                        renderCatalog();
-                    }
-                } else {
-                    grid.innerHTML = `<div class="text-amber-400 text-xs col-span-full py-8 text-center">No movies found.</div>`;
-                }
-            }).catch(() => {
-                grid.innerHTML = `<div class="text-red-400 text-xs col-span-full py-8 text-center">Connection error.</div>`;
-            });
-        } catch (e) {
-            grid.innerHTML = `<div class="text-red-400 text-xs col-span-full py-8 text-center">Error loading.</div>`;
-        }
+          <div class="mt-4 text-lg font-black text-white">${match.title}</div>
+          <div class="mt-5 flex items-center justify-between rounded-2xl bg-slate-900/80 px-3 py-3">
+            <span class="text-sm text-slate-400">Odds</span>
+            <span class="text-2xl font-black text-orange-300">${match.odds}</span>
+          </div>
+        </div>
+      `).join('');
+    }
 
-        function renderCatalog() {
-            grid.innerHTML = "";
-            let htmlContent = "";
-            allMoviesArray.keys(); // safe
-            allMoviesArray.forEach(([key, movie]) => {
-                if (!movie) return;
-                const title = movie.title || movie.Title || movie.name || "Movie";
-                const poster = movie.poster || movie.Poster || movie.image || 'https://via.placeholder.com/300x450?text=FilmyFly';
+    async function renderApiStatus() {
+      const repoMeta = await window.appApi.apiGetRepoMeta();
+      const statusHtml = `
+        <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-4">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-semibold text-emerald-300">GitHub API</span>
+            <span class="text-xs uppercase tracking-[0.2em] text-emerald-200">Online</span>
+          </div>
+          <div class="mt-3 text-lg font-black text-white">${repoMeta.name || 'funinhorse-demo'}</div>
+          <div class="mt-1 text-sm text-slate-300">${repoMeta.description || 'Dynamic gaming data source'}</div>
+        </div>
+        <div class="rounded-2xl border border-slate-700 bg-slate-900/80 p-4">
+          <div class="text-xs uppercase tracking-[0.2em] text-slate-400">Last update</div>
+          <div class="mt-2 text-base font-bold text-white">${new Date(repoMeta.updated_at || Date.now()).toLocaleString()}</div>
+        </div>
+      `;
+      apiStatus.innerHTML = statusHtml;
+    }
 
-                htmlContent += `
-                    <div class="movie-card" onclick="window.location.href='https://filmyskywebsite.netlify.app/?id=${key}'">
-                        <div class="movie-poster">
-                            <img src="${poster}" alt="${title} HD Download" loading="lazy">
-                        </div>
-                        <div class="movie-details">
-                            <div class="movie-name" title="${title}">${title}</div>
-                            <span class="watch-tag"><i class="fas fa-play-circle mr-1"></i> Watch HD</span>
-                        </div>
-                    </div>
-                `;
-            });
-            grid.innerHTML = htmlContent;
-        }
+    async function init() {
+      const state = await window.appApi.apiGetLobby();
+      document.getElementById('livePlayers').textContent = `${(state.stats.livePlayers / 1000).toFixed(1)}K`;
+      document.getElementById('totalWagers').textContent = state.stats.totalWagers;
+      document.getElementById('avgPayout').textContent = state.stats.avgPayout;
 
-        window.openPlayer = function(key, movie) {
-            activeMovie = movie;
-            document.getElementById('homeView').classList.remove('active');
-            document.getElementById('playerView').classList.add('active');
-            window.scrollTo(0, 0);
+      renderWinnerList(state.winners || []);
+      renderGames(state.games || []);
+      renderMatches(state.matches || []);
+      renderApiStatus();
+    }
 
-            const title = movie.title || movie.Title || movie.name || "Movie";
-            const desc = movie.description || movie.Description || movie.desc || "Watch online on FilmyFly.";
-            const rating = movie.rating || "";
-            const year = movie.year || "";
-
-            document.getElementById('headerTitle').textContent = title;
-            document.getElementById('movieTitle').textContent = title;
-            document.getElementById('movieDesc').textContent = desc;
-            document.getElementById('movieYear').textContent = year;
-            
-            if (rating) {
-                document.getElementById('movieRating').textContent = parseFloat(rating).toFixed(1);
-                document.getElementById('ratingBadgeBox').style.display = 'flex';
-            } else {
-                document.getElementById('ratingBadgeBox').style.display = 'none';
-            }
-            loadVideo();
-        }
-
-        window.goHome = function() { window.location.href = "https://filmyskywebsite.netlify.app/"; }
-        window.loadVideo = function() {
-            if (!activeMovie) return;
-            const player = document.getElementById('videoPlayer');
-            const mediaId = activeMovie.imdbId || activeMovie.tmdbId || activeMovie.id || "";
-            player.src = `https://slast430did.com/play/${mediaId}`;
-            document.getElementById('playerOverlay').classList.remove('show');
-            document.getElementById('externalPlayerBtn').href = `https://slast430did.com/play/${mediaId}`;
-        }
-        window.toggleFullscreen = function() {
-            const container = document.getElementById('playerContainer');
-            if (!document.fullscreenElement) { container.requestFullscreen().catch(()=>{}); }
-            else { document.exitFullscreen(); }
-        }
-    </script>
+    init();
+  </script>
 </body>
 </html>
